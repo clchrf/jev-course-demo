@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jev 課程計畫檢視</title>
-<meta name="description" content="以開源版 Jev（Laya）在瀏覽器即時判讀大專院校 AI 課程計畫是否符合教育部未來人才 AI 能力圖像。">
+<meta name="description" content="輸入一門課程，使用 Laya 示範 Jev 判讀流程，檢視大專院校 ABCD 四大能力與 11 項核心能力。">
 <!-- GitHub Pages 無法設定 COOP/COEP，用 service worker 補上，才能啟用多執行緒 WASM -->
 <script src="coi-serviceworker.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
@@ -167,6 +167,24 @@ footer a{color:var(--muted)}
   .switch span{display:none}
 }
 @media (prefers-reduced-motion:reduce){ .bar i{transition:none} .led.load,.spin{animation:none} }
+
+.course{margin-top:22px;background:white;border:1px solid var(--line);border-radius:22px;padding:24px;display:grid;gap:12px}
+.course h2{font-size:21px}.course label{font-weight:700;font-size:14px}
+.course input{font:inherit;width:100%;min-width:0;padding:12px 16px;border:1px solid var(--line);border-radius:12px;color:var(--ink);background:var(--card)}
+.course textarea{min-height:220px}.actions{margin:4px 0}.actions .primary{padding:11px 24px}
+#runStatus{font-size:14px;color:var(--muted)}
+.overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}
+.overview a{text-decoration:none;color:var(--ink);background:white;border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:8px}
+.overview a:hover{border-color:var(--blue)}.overview strong{font-size:27px}.overview small{color:var(--muted);font-size:12px}.overview span{font-size:14px}
+.card{scroll-margin-top:20px}.card.off .body{opacity:.55;pointer-events:auto}
+.detail-list{display:grid;gap:12px}.detail-item{border-top:1px solid var(--line);padding-top:12px}.detail-item header{padding:0;align-items:center;gap:8px}.detail-item code{color:var(--blue);font-size:13px}.detail-item h4{font-size:15px;margin:6px 0}.detail-item p{font-size:14px;color:var(--muted)}.detail-item output{font-weight:700;white-space:nowrap}.detail-item .bar{margin:10px 0}
+.evidence{background:var(--field);padding:14px 16px;border-radius:14px;font-size:14px;line-height:1.8;white-space:pre-wrap;max-height:180px;overflow:auto;margin:0}
+.comp-details summary{cursor:pointer;font-size:14px;font-weight:700;padding:8px 0}.comp-details[open] summary{margin-bottom:6px}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:var(--card);border-radius:12px;padding:12px;max-height:350px;overflow:auto}
+.row .nm small{font-size:12px}.fine{font-size:12px!important;color:var(--muted)!important}.note{color:var(--muted)!important}
+.btn{font-size:14px}.head h3{font-size:20px}.main{grid-template-columns:minmax(0,1fr) 350px}.row{grid-template-columns:155px minmax(40px,1fr) 36px 95px;gap:12px}
+@media(max-width:1050px){.main{grid-template-columns:minmax(0,1fr)}aside{position:static;max-height:none}}
+@media(max-width:640px){.overview{grid-template-columns:repeat(2,minmax(0,1fr))}.course{padding:18px}.row{grid-template-columns:minmax(0,1fr) 40px}.row .nm,.row .tg{grid-column:1/-1}.head{flex-wrap:wrap}.head h3{font-size:18px}.switch{margin-left:auto}.card{padding:18px}.result{padding:16px}.overview a{padding:12px}h1{font-size:28px}}
 </style>
 </head>
 <body>
@@ -174,10 +192,10 @@ footer a{color:var(--muted)}
   <header>
     <div>
       <h1>Jev 課程計畫檢視</h1>
-      <p class="sub">用開源版 Jev（Laya）在你的瀏覽器裡即時判讀：教師寫的 AI 課程規劃，是否符合教育部《未來人才 AI 能力圖像》大專院校階段的核心能力。改任何一個字，模型都會重新判斷。</p>
+      <p class="sub">一門課，一次檢視 ABCD。依大專院校人才圖像的 11 項核心能力，示範 Jev 的「資料 → 提問 → 機率 → 評分」流程。實際判讀使用開源 Laya。</p>
     </div>
     <div class="facts">
-      <div class="fact"><b>3.2 億</b><span>參數・mmBERT 多語編碼器</span></div>
+      <div class="fact"><b>4 / 11</b><span>能力向度 / 核心細項</span></div>
       <div class="fact"><b>0 字</b><span>生成文字・只回傳機率</span></div>
       <div class="fact"><b>本機</b><span>資料不離開瀏覽器</span></div>
     </div>
@@ -190,22 +208,27 @@ footer a{color:var(--muted)}
     <div class="prog" id="prog" hidden><i id="progBar"></i></div>
   </section>
 
+  <section class="course" aria-labelledby="courseHeading">
+    <div class="toolbar"><h2 id="courseHeading">01　輸入一門課程</h2><span class="pill">大專院校 · IV 階段</span></div>
+    <label for="courseName">課程名稱</label>
+    <input id="courseName" type="text" maxlength="120" value="顧客關係管理與 AI 應用（餐旅系三年級）">
+    <label for="syllabus">課程綱要與教學活動</label>
+    <textarea id="syllabus" rows="9" placeholder="貼上這門課的課程目標、教學活動、週次與評量方式。ABCD 都會使用這份完整內容。"></textarea>
+    <div class="hint"><span>請保留活動與評量證據；長課綱會依模型容量分段，全段檢視。</span><span id="courseCount"></span></div>
+    <div class="toolbar actions"><div class="btns"><button class="btn" id="allGood">載入完整課程範例</button><button class="btn" id="allBad">載入空泛反例</button><button class="btn" id="clearCourse">清空</button></div><button class="btn primary" id="runBtn">開始檢視 ABCD</button></div>
+    <p id="runStatus" role="status">準備好後，按「開始檢視 ABCD」。首次會先載入模型。</p>
+  </section>
+  <nav id="overview" class="overview" aria-label="四大能力總覽"></nav>
   <div class="main">
     <section aria-labelledby="formTitle">
-      <div class="toolbar">
-        <h2 id="formTitle">AI 課程計畫申請表・顧客關係管理與 AI 應用（餐旅系三年級）</h2>
-        <div class="btns">
-          <button class="btn" id="allGood" type="button">全部載入好例子</button>
-          <button class="btn" id="allBad" type="button">全部載入反例</button>
-        </div>
-      </div>
+      <div class="toolbar"><h2 id="formTitle">02　人才圖像 ABCD 檢視</h2><button class="btn" id="exportBtn" disabled>下載檢視結果</button></div>
       <div class="cards" id="cards"></div>
     </section>
 
     <aside aria-label="Laya 呼叫紀錄">
       <div>
         <h2>Laya 呼叫紀錄</h2>
-        <p class="lead">每次判斷送進模型的內容、問題與回傳的 P(是)</p>
+        <p class="lead">資料 → 問題設定 → 原始回傳 → 畫面分數</p>
       </div>
       <div class="meters">
         <div><b class="tab" id="mBackend">–</b><span>執行後端</span></div>
@@ -213,30 +236,26 @@ footer a{color:var(--muted)}
         <div><b class="tab" id="mCalls">0</b><span>已問題數</span></div>
       </div>
       <div class="abtabs" id="abtabs"></div>
-      <div id="logBody"><p class="lead">模型載入後，這裡會顯示最近一次判斷的完整內容。</p></div>
+      <div id="logBody"><p class="lead">執行檢視後，在此選擇 A–D 查看送入的問題、分段原文與模型回傳。</p></div>
       <p class="fine">示範資料，不代表實際案例；分數僅供參考，未經嚴謹驗證。</p>
     </aside>
   </div>
 
   <section class="method" aria-labelledby="mTitle">
-    <h2 id="mTitle">怎麼問 Laya</h2>
-    <p>Jev／Laya 不生成文字，只回答是非題的機率。我們把每項能力拆成模型答得準的「事實題」，一段文字一次問 6 題，只需一次編碼器運算。</p>
-    <div class="tw">
-      <table>
-        <thead><tr><th>畫面名稱</th><th>評分項目</th><th>問 Laya 的題目</th><th>換算</th><th>驗證 AUC</th></tr></thead>
-        <tbody>
-          <tr><td>對到定義</td><td><code>alignment</code></td><td>該能力的 3 題核心行為題（例如 D：學生是否訪談或與真人互動？）</td><td>三題取最高 × 100</td><td>0.78</td></tr>
-          <tr><td>看得到做法</td><td><code>concreteness</code></td><td>是否寫出週次或評分方式？是否提到具體數字、資料或工具？</td><td>兩題平均 × 100</td><td>0.98</td></tr>
-          <tr><td>成果不誇大</td><td><code>supported</code></td><td>同上 3 題核心行為題，看涵蓋了幾項</td><td>三題平均 × 100</td><td>0.68</td></tr>
-          <tr><td>不是範本</td><td><code>boilerplate</code></td><td>是否只是培養能力的空泛口號？</td><td>(1 − P) × 100</td><td>1.00</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p>驗證方式：20 段課程文字（12 段未參與調整題目），計算好文案分數高於反例的比例（AUC，0.5 為隨機）。四項平均後的總分 AUC 為 0.93。題目以英文提問、文字維持中文，這是測試中對 Laya 多語模型效果最好的組合；模型以 4／8 位元權重量化，與原始 PyTorch 模型的鑑別度一致。</p>
+    <h2 id="mTitle">Jev 的用法：把評分拆成明確問題</h2>
+    <p>同一份課綱 → 每個向度的判斷問題 → 結構化機率 → 四項檢視與核心能力細項。右側可查看實際送入 Laya 的設定與原始回傳。</p>
+    <div class="tw"><table><thead><tr><th>畫面項目</th><th>欄位</th><th>判斷問題</th><th>換算方式</th></tr></thead><tbody>
+      <tr><td>對到定義</td><td><code>alignment</code></td><td>教學內容有多貼近該能力定義？</td><td>score：0–4 期望值 × 25</td></tr>
+      <tr><td>看得到做法</td><td><code>concreteness</code></td><td>活動、成果與評量有多具體？</td><td>score：0–4 期望值 × 25</td></tr>
+      <tr><td>成果不誇大</td><td><code>supported</code></td><td>描述的活動是否支持宣稱的能力？</td><td>noul：P(是) × 100</td></tr>
+      <tr><td>不是範本</td><td><code>boilerplate</code></td><td>能否不改文字就貼到別的課程？</td><td>noul：[1 − P(是)] × 100</td></tr>
+    </tbody></table></div>
+    <p>四項等權平均為 0–100 檢視分數；80 以上為「很好」、50–79 為「尚可」、未滿 50 為「要補強」。11 個核心細項各以一個可觀察行為提問，並非完整能力測量，顯示 P(是)；50% 是 Demo 的提示門檻，不代表學生已具備能力。</p>
+    <p>課綱依空白行與模型容量分段後，細項取各段最高機率，四項檢視取與該向度最相關段落的結果。這是展示用的彙整規則，不是教育部官方評分；也不等同另一份簡報的 0–5 課程培養程度量尺。原文與機率供人工複核，未經正式效度驗證。</p>
   </section>
 
   <footer>
-    <p>模型：<a href="https://github.com/NandhaKishorM/laya">Laya</a>（Convai Innovations，Apache-2.0）・laya-multilingual 權重來自 <a href="https://huggingface.co/convaiinnovations/laya">Hugging Face</a>，經 ONNX 轉換與量化。Jev 為 TypeSafe AI 之閉源產品，本頁未使用其服務。</p>
+    <p>模型：<a href="https://github.com/NandhaKishorM/laya">Laya</a>（Convai Innovations，Apache-2.0）・laya-multilingual 權重來自 <a href="https://huggingface.co/convaiinnovations/laya">Hugging Face</a>，經 ONNX 轉換與量化。Jev 為 TypeSafe AI 之產品，本頁未串接其官方服務。<a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">Jev 官方介紹</a>。</p>
     <p>能力定義：教育部資訊及科技教育司（2026）。<a href="https://depart.moe.edu.tw/ed2700/News_Content.aspx?n=A1E30194B1C3ACDF&amp;s=4C49BBB8F747DE99">《未來人才AI能力圖像》</a>大專院校階段（IV）。</p>
   </footer>
 </div>
