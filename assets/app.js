@@ -59,7 +59,7 @@ function renderCards(){
     <div class="result idle" id="rs-${ab.id}"><div class="rhead"><span class="lbl">AI 檢視（Laya）<span class="spin"></span></span><span class="total"><b id="tot-${ab.id}">–</b><span id="grade-${ab.id}">尚未檢視</span></span></div>
     ${METRICS.map(([key,name,sub])=>`<div class="row"><div class="nm"><b>${name}</b><small>${sub}</small></div><div class="bar"><i id="bar-${ab.id}-${key}"></i></div><div class="sc" id="sc-${ab.id}-${key}">–</div><div class="tg" id="tag-${ab.id}-${key}"></div></div>`).join('')}
     <p class="note" id="note-${ab.id}"></p></div>
-    <details class="comp-details" open><summary>核心能力細項 · ${ab.comps.length} 項</summary><div class="detail-list">
+    <details class="comp-details" ${matchMedia("(max-width:640px)").matches ? "" : "open"}><summary>核心能力細項 · ${ab.comps.length} 項</summary><div class="detail-list">
     ${ab.comps.map(([id,name,desc])=>`<div class="detail-item"><header><code>${id}</code><output id="p-${id}">尚未檢視</output></header><h4>${name}</h4><p>${desc}</p><div class="bar"><i id="db-${id}"></i></div><p id="feedback-${id}">檢視後顯示機率與原文對照。</p><details><summary>提問與對照原文</summary><p>${esc(questionsFor(ab)[id].instructions)}</p><blockquote class="evidence" id="de-${id}">尚未檢視</blockquote></details></div>`).join('')}
     </div></details></div></article>`).join('');
   ABILITIES.forEach(ab=>$('on-'+ab.id).addEventListener('change',()=>{

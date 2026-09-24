@@ -1,0 +1,83 @@
+/* Touch-friendly reading layout. Desktop keeps the presentation reference. */
+.mobile-nav{display:none}
+.main>section,.card,.body,.result,.detail-item{min-width:0}
+@media(max-width:640px){
+  body{padding:0 12px max(32px,env(safe-area-inset-bottom));font-size:16px;line-height:1.75}
+  .wrap>header{padding:24px 4px 20px;gap:20px}
+  h1{font-size:28px;line-height:1.3;letter-spacing:-.025em}
+  .sub{font-size:15px;line-height:1.8;margin-top:10px}
+  .facts{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;border-top:1px solid var(--line);padding-top:16px}
+  .fact b{font-size:18px}.fact span{font-size:12px;line-height:1.5;display:block;margin-top:4px}
+  .modelbar{padding:16px;border-radius:16px;gap:12px}
+  .modelbar .info{min-width:0;flex-basis:100%;font-size:14px;line-height:1.7}
+  .modelbar .st{font-size:15px}.modelbar .btn{width:100%}
+  .btn{min-height:48px;font-size:15px;padding:10px 14px;touch-action:manipulation}
+  .course{padding:18px 16px;margin-top:16px;border-radius:20px;gap:10px}
+  .toolbar{gap:12px;margin-bottom:8px;align-items:center}
+  .course .toolbar:first-child{display:grid;gap:8px;justify-items:start}
+  .course h2,.toolbar h2{font-size:19px;line-height:1.5}
+  .course label{font-size:15px;margin-top:6px}
+  .course input,.course textarea{font-size:16px;padding:12px;line-height:1.8}
+  .course textarea{height:260px;min-height:220px;max-height:65dvh}
+  .hint{font-size:13px;line-height:1.7;gap:8px;flex-wrap:wrap}
+  #courseCount{margin-left:auto;white-space:nowrap}
+  .actions{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-top:6px}
+  .actions .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .actions .btns .btn:first-child{grid-column:1/-1}
+  #runBtn{width:100%;min-height:52px;font-size:16px;font-weight:700;border-radius:12px}
+  #runStatus{font-size:14px;line-height:1.75}
+  .mobile-nav{display:flex;position:sticky;top:8px;z-index:10;gap:4px;padding:6px;margin:18px 0 0;border:1px solid var(--line);background:#fff;border-radius:14px;box-shadow:0 4px 16px #18284410}
+  .mobile-nav a{display:flex;align-items:center;justify-content:center;flex:1;min-height:44px;color:var(--ink);font-size:15px;font-weight:700;text-decoration:none;border-radius:9px}
+  .mobile-nav a:first-child{flex:1.6;font-weight:500}.mobile-nav a:hover,.mobile-nav a:focus-visible{background:#eaf2ff;color:#165ac4}
+  #courseHeading,.card{scroll-margin-top:84px}
+  .overview{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+  .overview a{padding:14px 12px;gap:8px;border-radius:16px;align-content:start}
+  .overview span{font-size:14px;line-height:1.6;min-height:3.2em}
+  .overview strong{font-size:26px;line-height:1.2}.overview small{font-size:12px;line-height:1.6}
+  .main{gap:24px;margin-top:26px}.main>section>.toolbar{display:grid;gap:10px;margin-bottom:16px}
+  #exportBtn{justify-self:start}.cards{gap:24px}
+  .card{padding:20px 16px;border-radius:20px;border:1px solid #e5eaf1;gap:16px}
+  .head{display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px 10px;align-items:center}
+  .head h3{font-size:19px;line-height:1.5;text-wrap:initial}
+  .badge{width:26px;height:26px;font-size:13px}
+  .switch{grid-column:1/-1;margin:2px 0 0;min-height:44px;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:10px;font-size:14px}
+  .switch span{display:inline}.switch input{flex:none;width:48px;height:28px}.switch input::after{width:22px;height:22px}
+  .body{gap:14px}.desc{font-size:16px;line-height:1.85}.q{font-size:15px;line-height:1.8}
+  .warn{font-size:13px;line-height:1.75}
+  .evidence{font-size:15px;line-height:1.85;padding:14px;border-radius:12px;max-height:240px;overflow-wrap:anywhere;overscroll-behavior:contain}
+  .result{padding:16px 14px;border-radius:16px;gap:0;margin-top:2px}
+  .rhead{gap:8px;flex-wrap:wrap;padding-bottom:14px}.rhead .lbl{font-size:14px}
+  .total b{font-size:30px}.total span{font-size:13px}
+  .row{grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;padding:14px 0;border-top:1px solid var(--line)}
+  .row .nm{grid-column:1;grid-row:1}.row .nm b{font-size:15px}.row .nm small{font-size:13px;line-height:1.6;margin-top:3px}
+  .row .sc{grid-column:2;grid-row:1;font-size:20px;align-self:start;min-width:30px}
+  .row .bar{grid-column:1/-1;grid-row:2;height:7px}
+  .row .tg{grid-column:1/-1;grid-row:3;text-align:right;font-size:13px;margin:0;line-height:1.4}
+  .row .tg:empty{display:none}
+  .result.idle .row,.result.idle .total{opacity:1}.result.idle .sc{color:var(--muted)}
+  .result .note{font-size:13px;line-height:1.7}.result .note:empty{display:none}
+  .comp-details{border-top:1px solid var(--line);padding-top:4px}
+  summary{min-height:48px;align-content:center;cursor:pointer;overflow-wrap:anywhere}
+  .comp-details summary{font-size:15px;padding:12px 0;line-height:1.6}
+  .detail-list{gap:20px}.detail-item{padding-top:16px}.detail-item header{gap:6px;align-items:center}
+  .detail-item code{font-size:13px}.detail-item output{font-size:14px}.detail-item h4{font-size:16px;line-height:1.7;margin:10px 0 8px}
+  .detail-item p{font-size:15px;line-height:1.85;overflow-wrap:anywhere}.detail-item details summary{font-size:14px}
+  aside{padding:18px 16px;border-radius:20px;gap:16px;overflow:visible}
+  aside .lead{font-size:14px;line-height:1.75}.meters span{font-size:12px}.meters b{font-size:14px;overflow-wrap:anywhere}
+  .abtabs button{min-height:54px}.abtabs .l{font-size:13px}.abtabs .n{font-size:18px}
+  pre{font-size:13px;line-height:1.75;max-height:320px;overscroll-behavior:contain}
+  .req{font-size:13px;line-height:1.75}.fine{font-size:13px!important}
+  .method{margin-top:30px;gap:16px}.method h2{font-size:21px;line-height:1.5}.method p{font-size:15px;line-height:1.85}
+  .tw{overflow:visible;border:0;background:none;border-radius:0}
+  table,tbody{display:block;width:100%;min-width:0}
+  thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  tbody tr{display:block;padding:16px;background:white;border:1px solid var(--line);border-radius:16px;margin-bottom:12px}
+  td{display:block;padding:6px 0;border:0;font-size:15px;overflow-wrap:anywhere}
+  td:first-child{font-weight:700;font-size:17px}td code{font-size:13px}
+  td[data-label]::before{content:attr(data-label);display:block;color:var(--muted);font-size:13px;margin-bottom:2px}
+  footer{margin-top:28px;padding:18px 4px 0;gap:14px;font-size:13px;line-height:1.9;color:var(--muted);overflow-wrap:anywhere}
+}
+@media(max-width:360px){
+  body{padding-inline:8px}.course,.card{padding-inline:12px}.result{padding-inline:12px}
+  .overview{gap:8px}.overview a{padding:12px 10px}.facts{gap:8px}.fact b{font-size:17px}
+}

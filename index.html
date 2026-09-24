@@ -186,6 +186,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:var(--
 @media(max-width:1050px){.main{grid-template-columns:minmax(0,1fr)}aside{position:static;max-height:none}}
 @media(max-width:640px){.overview{grid-template-columns:repeat(2,minmax(0,1fr))}.course{padding:18px}.row{grid-template-columns:minmax(0,1fr) 40px}.row .nm,.row .tg{grid-column:1/-1}.head{flex-wrap:wrap}.head h3{font-size:18px}.switch{margin-left:auto}.card{padding:18px}.result{padding:16px}.overview a{padding:12px}h1{font-size:28px}}
 </style>
+<link rel="stylesheet" href="assets/mobile.css">
 </head>
 <body>
 <div class="wrap">
@@ -218,6 +219,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:var(--
     <div class="toolbar actions"><div class="btns"><button class="btn" id="allGood">載入完整課程範例</button><button class="btn" id="allBad">載入空泛反例</button><button class="btn" id="clearCourse">清空</button></div><button class="btn primary" id="runBtn">開始檢視 ABCD</button></div>
     <p id="runStatus" role="status">準備好後，按「開始檢視 ABCD」。首次會先載入模型。</p>
   </section>
+  <nav class="mobile-nav" aria-label="手機快速導覽"><a href="#courseHeading">課程</a><a href="#card-A" aria-label="A 運用 AI 學習">A</a><a href="#card-B" aria-label="B 負責任使用 AI">B</a><a href="#card-C" aria-label="C 運用 AI 解決問題">C</a><a href="#card-D" aria-label="D AI 無法取代的能力">D</a></nav>
   <nav id="overview" class="overview" aria-label="四大能力總覽"></nav>
   <div class="main">
     <section aria-labelledby="formTitle">
@@ -243,12 +245,12 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:var(--
 
   <section class="method" aria-labelledby="mTitle">
     <h2 id="mTitle">Jev 的用法：把評分拆成明確問題</h2>
-    <p>同一份課綱 → 每個向度的判斷問題 → 結構化機率 → 四項檢視與核心能力細項。右側可查看實際送入 Laya 的設定與原始回傳。</p>
+    <p>同一份課綱 → 每個向度的判斷問題 → 結構化機率 → 四項檢視與核心能力細項。「Laya 呼叫紀錄」可查看實際送入模型的設定與原始回傳。</p>
     <div class="tw"><table><thead><tr><th>畫面項目</th><th>欄位</th><th>判斷問題</th><th>換算方式</th></tr></thead><tbody>
-      <tr><td>對到定義</td><td><code>alignment</code></td><td>教學內容有多貼近該能力定義？</td><td>score：0–4 期望值 × 25</td></tr>
-      <tr><td>看得到做法</td><td><code>concreteness</code></td><td>活動、成果與評量有多具體？</td><td>score：0–4 期望值 × 25</td></tr>
-      <tr><td>成果不誇大</td><td><code>supported</code></td><td>描述的活動是否支持宣稱的能力？</td><td>noul：P(是) × 100</td></tr>
-      <tr><td>不是範本</td><td><code>boilerplate</code></td><td>能否不改文字就貼到別的課程？</td><td>noul：[1 − P(是)] × 100</td></tr>
+      <tr><td>對到定義</td><td><code>alignment</code></td><td data-label="判斷問題">教學內容有多貼近該能力定義？</td><td data-label="換算方式">score：0–4 期望值 × 25</td></tr>
+      <tr><td>看得到做法</td><td><code>concreteness</code></td><td data-label="判斷問題">活動、成果與評量有多具體？</td><td data-label="換算方式">score：0–4 期望值 × 25</td></tr>
+      <tr><td>成果不誇大</td><td><code>supported</code></td><td data-label="判斷問題">描述的活動是否支持宣稱的能力？</td><td data-label="換算方式">noul：P(是) × 100</td></tr>
+      <tr><td>不是範本</td><td><code>boilerplate</code></td><td data-label="判斷問題">能否不改文字就貼到別的課程？</td><td data-label="換算方式">noul：[1 − P(是)] × 100</td></tr>
     </tbody></table></div>
     <p>四項等權平均為 0–100 檢視分數；80 以上為「很好」、50–79 為「尚可」、未滿 50 為「要補強」。11 個核心細項各以一個可觀察行為提問，並非完整能力測量，顯示 P(是)；50% 是 Demo 的提示門檻，不代表學生已具備能力。</p>
     <p>課綱依空白行與模型容量分段後，細項取各段最高機率，四項檢視取與該向度最相關段落的結果。這是展示用的彙整規則，不是教育部官方評分；也不等同另一份簡報的 0–5 課程培養程度量尺。原文與機率供人工複核，未經正式效度驗證。</p>
