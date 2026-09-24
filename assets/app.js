@@ -1,4 +1,5 @@
 import { ABILITIES } from './abilities.js';
+import { SAMPLES, REAL_SYLLABI } from './samples.js';
 import { RUBRIC, LEVELS } from './rubric.js';
 import { METRICS, MODEL_POLICY, modelQuestions, splitUnits, analyzeUnits, scoreAbility } from './course-engine.js';
 const $ = id => document.getElementById(id);
@@ -130,9 +131,14 @@ function renderLog(){
   $('logBody').innerHTML=`<div class="req">agent.predict(teachingUnit, questions)<br>${ids.length} 個問題 × ${course.units.length} 段<br>輸出 0 tokens${r.modelPending?' · 運算中':''}</div>
     <p class="lead">noul 回傳 P(是)。分數由尺規比對原文產生；模型機率只列出並標示是否與尺規方向一致（門檻 ${MODEL_POLICY.agree}），不計分，也不觸發複核（校準顯示這類旗標抓不到錯誤）。</p>
     <details><summary>完整提問設定</summary><pre>${esc(JSON.stringify(qs,null,2))}</pre></details>
-    ${course.units.map((u,i)=>{const rule=Object.fromEntries(ids.filter(id=>course.analysis[i].comps[id]).map(id=>{const e=course.analysis[i].comps[id];return [id,{practice:e.practice,output:e.output,check:e.check}];}));
-      const m=raw?.[i]?raw[i].map(p=>({text:p.text===u?'(同本段)':p.text,answers:Object.fromEntries(ids.map(id=>[id,p.answers[id]]))})):'尚未取得';
-      return `<details ${Object.keys(rule).some(id=>rule[id].practice)?'open':''}><summary>第 ${i+1} 段 · 原文、尺規比對與模型回傳</summary><blockquote class="evidence">${esc(u)}</blockquote><pre>${esc(JSON.stringify({rubric:rule,laya:m},null,2))}</pre></details>`;}).join('')}`;
+    ${(()=>{
+      const seg=i=>{const u=course.units[i];const rule=Object.fromEntries(ids.filter(id=>course.analysis[i].comps[id]).map(id=>{const e=course.analysis[i].comps[id];return [id,{practice:e.practice,output:e.output,check:e.check}];}));
+        const m=raw?.[i]?raw[i].map(p=>({text:p.text===u?'(同本段)':p.text,answers:Object.fromEntries(ids.map(id=>[id,p.answers[id]]))})):'尚未取得';
+        return `<details class="seg"><summary>第 ${i+1} 段 · ${esc(u.split('\n')[0].slice(0,18))}${u.length>18?'…':''}</summary><blockquote class="evidence">${esc(u)}</blockquote><pre>${esc(JSON.stringify({rubric:rule,laya:m},null,2))}</pre></details>`;};
+      // Units with practice evidence for this ability first; everything else folded into one list.
+      const all=course.units.map((_,i)=>i), ev=all.filter(i=>ids.some(id=>course.analysis[i].comps[id]?.practice)), rest=all.filter(i=>!ev.includes(i));
+      return `<p class="lead"><b>有練習證據的段落（${ev.length}）</b></p>${ev.map(seg).join('')||'<p class="lead">無</p>'}
+        <details class="seg-rest"><summary>其他段落（${rest.length}）</summary>${rest.map(seg).join('')}</details>`;})()}`;
 }
 function invalidate(){
   revision++; results={};lastInput=null;course=null;$('exportBtn').disabled=true;
@@ -141,11 +147,18 @@ function invalidate(){
   $('courseCount').textContent=Array.from($('syllabus').value).length+' 字';
   $('runStatus').textContent=running?'內容已更改，正在停止舊版檢視；完成後請重新執行。':'內容已更新，按「開始檢視 ABCD」取得結果。';
 }
-function fillCourse(kind){
-  $('courseName').value='顧客關係管理與 AI 應用（餐旅系三年級）';
-  $('syllabus').value=ABILITIES.map(ab=>ab[kind]).join('\n\n');
+let sample=null;
+function renderSamples(){
+  $('samples').innerHTML=SAMPLES.map(s=>`<button type="button" class="chip" data-sample="${s.id}" aria-pressed="${sample===s.id}"><b>${esc(s.label)}</b><small>${esc(s.kind)}</small></button>`).join('');
+  $('samples').querySelectorAll('button').forEach(b=>b.onclick=()=>fillCourse(b.dataset.sample));
+  const s=SAMPLES.find(x=>x.id===sample);
+  $('sampleNote').textContent=s?(s.kind.startsWith('虛構')?`已載入「${s.title}」：為本 Demo 撰寫的虛構課綱，格式仿照大學課程系統，非真實課程。`:`已載入「${s.title}」：頁面內建範例。`):'目前為自行輸入的課綱。';
+}
+function fillCourse(id){
+  const s=SAMPLES.find(x=>x.id===id);
+  $('courseName').value=s.title;$('syllabus').value=s.text;
   ABILITIES.forEach(ab=>{$('on-'+ab.id).checked=true;$('card-'+ab.id).classList.remove('off');});
-  invalidate();
+  invalidate();sample=id;renderSamples();
 }
 async function runCourse(){
   if(running)return;
@@ -211,11 +224,12 @@ async function runCourse(){
   }
 }
 renderCards();fillCourse('good');
+$('realLinks').innerHTML=REAL_SYLLABI.map(r=>`<li><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.school)}・${esc(r.course)}</a></li>`).join('');
 ABILITIES.forEach(ab=>{states[ab.id]='尚未檢視';paint(ab);});overview();renderLog();
 $('runStatus').textContent='範例已填入。按「開始檢視 ABCD」取得結果。';
-$('allGood').onclick=()=>fillCourse('good');$('allBad').onclick=()=>fillCourse('bad');
-$('clearCourse').onclick=()=>{$('syllabus').value='';$('courseName').value='';invalidate();};
-$('syllabus').oninput=invalidate;$('courseName').oninput=invalidate;
+const edited=()=>{if(sample){sample=null;renderSamples();}invalidate();};
+$('clearCourse').onclick=()=>{$('syllabus').value='';$('courseName').value='';edited();};
+$('syllabus').oninput=edited;$('courseName').oninput=edited;
 $('runBtn').onclick=runCourse;
 $('loadBtn').onclick=()=>loadModel().catch(()=>{});
 $('exportBtn').onclick=()=>{

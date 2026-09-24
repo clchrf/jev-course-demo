@@ -1,0 +1,717 @@
+{
+ "note": "真實公開課綱的檢視結果。原文受著作權保護，未收錄於本 repo；請依 url 自行查閱。",
+ "createdAt": "2026-09-24T08:50:23.597Z",
+ "results": [
+  {
+   "id": "ntu-genai-112-2",
+   "school": "國立臺灣大學",
+   "course": "生成式人工智慧導論（112-2，電機所）",
+   "url": "https://nol.ntu.edu.tw/nol/coursesearch/print_table.php?course_id=921+U3570&class=&dpt_code=9210&ser_no=74774&semester=112-2",
+   "units": 34,
+   "chars": 2938,
+   "v1": {
+    "A": {
+     "total": 58,
+     "details": [
+      {
+       "id": "A-1-IV-1",
+       "p": 0.999
+      },
+      {
+       "id": "A-2-IV-1",
+       "p": 0.999
+      }
+     ]
+    },
+    "B": {
+     "total": 57,
+     "details": [
+      {
+       "id": "B-1-IV-1",
+       "p": 0.9973
+      },
+      {
+       "id": "B-2-IV-1",
+       "p": 0.9968
+      },
+      {
+       "id": "B-3-IV-1",
+       "p": 0.999
+      }
+     ]
+    },
+    "C": {
+     "total": 59,
+     "details": [
+      {
+       "id": "C-1-IV-1",
+       "p": 0.9996
+      },
+      {
+       "id": "C-2-IV-1",
+       "p": 0.9997
+      },
+      {
+       "id": "C-3-IV-1",
+       "p": 0.9995
+      }
+     ]
+    },
+    "D": {
+     "total": 57,
+     "details": [
+      {
+       "id": "D-1-IV-1",
+       "p": 0.9992
+      },
+      {
+       "id": "D-2-IV-1",
+       "p": 0.9877
+      },
+      {
+       "id": "D-3-IV-1",
+       "p": 0.9994
+      }
+     ]
+    }
+   },
+   "v2": {
+    "A": {
+     "total": 25,
+     "status": "ok",
+     "comps": [
+      {
+       "id": "A-1-IV-1",
+       "level": 2,
+       "practice": true,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [
+        26
+       ],
+       "pEvidence": 0.1008,
+       "pAny": 1,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "A-2-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 1,
+       "modelAgrees": false,
+       "review": null
+      }
+     ]
+    },
+    "B": {
+     "total": 17,
+     "status": "insufficient",
+     "comps": [
+      {
+       "id": "B-1-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 1,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "B-2-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 1,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "B-3-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9999,
+       "modelAgrees": false,
+       "review": null
+      }
+     ]
+    },
+    "C": {
+     "total": 33,
+     "status": "ok",
+     "comps": [
+      {
+       "id": "C-1-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 1,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "C-2-IV-1",
+       "level": 3,
+       "practice": true,
+       "output": false,
+       "check": true,
+       "evidenceUnits": [
+        8
+       ],
+       "pEvidence": 0.6808,
+       "pAny": 1,
+       "modelAgrees": true,
+       "review": null
+      },
+      {
+       "id": "C-3-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 1,
+       "modelAgrees": false,
+       "review": null
+      }
+     ]
+    },
+    "D": {
+     "total": 33,
+     "status": "ok",
+     "comps": [
+      {
+       "id": "D-1-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 1,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "D-2-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.625,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "D-3-IV-1",
+       "level": 3,
+       "practice": true,
+       "output": false,
+       "check": true,
+       "evidenceUnits": [
+        8
+       ],
+       "pEvidence": 0.9021,
+       "pAny": 1,
+       "modelAgrees": true,
+       "review": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ncku-za50900-113-2",
+   "school": "國立成功大學／臺灣大專院校人工智慧學程聯盟",
+   "course": "生成式AI：文字與圖像生成的原理與實務（113-2）",
+   "url": "https://class-qry.acad.ncku.edu.tw/syllabus/online_display_remote.php?class_code=&co_no=ZA50900&sem=2&syear=0113",
+   "units": 23,
+   "chars": 2092,
+   "v1": {
+    "A": {
+     "total": 44,
+     "details": [
+      {
+       "id": "A-1-IV-1",
+       "p": 1
+      },
+      {
+       "id": "A-2-IV-1",
+       "p": 0.9995
+      }
+     ]
+    },
+    "B": {
+     "total": 69,
+     "details": [
+      {
+       "id": "B-1-IV-1",
+       "p": 0.9936
+      },
+      {
+       "id": "B-2-IV-1",
+       "p": 0.9959
+      },
+      {
+       "id": "B-3-IV-1",
+       "p": 0.9998
+      }
+     ]
+    },
+    "C": {
+     "total": 61,
+     "details": [
+      {
+       "id": "C-1-IV-1",
+       "p": 0.9993
+      },
+      {
+       "id": "C-2-IV-1",
+       "p": 0.9961
+      },
+      {
+       "id": "C-3-IV-1",
+       "p": 0.9989
+      }
+     ]
+    },
+    "D": {
+     "total": 69,
+     "details": [
+      {
+       "id": "D-1-IV-1",
+       "p": 0.9998
+      },
+      {
+       "id": "D-2-IV-1",
+       "p": 0.9725
+      },
+      {
+       "id": "D-3-IV-1",
+       "p": 1
+      }
+     ]
+    }
+   },
+   "v2": {
+    "A": {
+     "total": 0,
+     "status": "insufficient",
+     "comps": [
+      {
+       "id": "A-1-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 1,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "A-2-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9998,
+       "modelAgrees": false,
+       "review": null
+      }
+     ]
+    },
+    "B": {
+     "total": 33,
+     "status": "ok",
+     "comps": [
+      {
+       "id": "B-1-IV-1",
+       "level": 3,
+       "practice": true,
+       "output": true,
+       "check": false,
+       "evidenceUnits": [
+        4
+       ],
+       "pEvidence": 0.9965,
+       "pAny": 1,
+       "modelAgrees": true,
+       "review": null
+      },
+      {
+       "id": "B-2-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9998,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "B-3-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9998,
+       "modelAgrees": false,
+       "review": null
+      }
+     ]
+    },
+    "C": {
+     "total": 42,
+     "status": "ok",
+     "comps": [
+      {
+       "id": "C-1-IV-1",
+       "level": 2,
+       "practice": true,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [
+        7
+       ],
+       "pEvidence": 0.99,
+       "pAny": 1,
+       "modelAgrees": true,
+       "review": null
+      },
+      {
+       "id": "C-2-IV-1",
+       "level": 2,
+       "practice": true,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [
+        20
+       ],
+       "pEvidence": 0.9954,
+       "pAny": 1,
+       "modelAgrees": true,
+       "review": null
+      },
+      {
+       "id": "C-3-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9999,
+       "modelAgrees": false,
+       "review": null
+      }
+     ]
+    },
+    "D": {
+     "total": 25,
+     "status": "ok",
+     "comps": [
+      {
+       "id": "D-1-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9994,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "D-2-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.7215,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "D-3-IV-1",
+       "level": 2,
+       "practice": true,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [
+        7,
+        22
+       ],
+       "pEvidence": 0.9864,
+       "pAny": 0.996,
+       "modelAgrees": true,
+       "review": null
+      }
+     ]
+    }
+   }
+  },
+  {
+   "id": "ncku-n063700-113-1",
+   "school": "國立成功大學",
+   "course": "人工智慧與應用（113-1，工程管理）",
+   "url": "https://class-qry.acad.ncku.edu.tw/syllabus/online_display.php?class_code=&co_no=N063700&sem=1&syear=0113",
+   "units": 21,
+   "chars": 2581,
+   "v1": {
+    "A": {
+     "total": 59,
+     "details": [
+      {
+       "id": "A-1-IV-1",
+       "p": 0.9997
+      },
+      {
+       "id": "A-2-IV-1",
+       "p": 0.9935
+      }
+     ]
+    },
+    "B": {
+     "total": 58,
+     "details": [
+      {
+       "id": "B-1-IV-1",
+       "p": 0.9884
+      },
+      {
+       "id": "B-2-IV-1",
+       "p": 0.9938
+      },
+      {
+       "id": "B-3-IV-1",
+       "p": 0.999
+      }
+     ]
+    },
+    "C": {
+     "total": 59,
+     "details": [
+      {
+       "id": "C-1-IV-1",
+       "p": 0.9998
+      },
+      {
+       "id": "C-2-IV-1",
+       "p": 0.997
+      },
+      {
+       "id": "C-3-IV-1",
+       "p": 0.9973
+      }
+     ]
+    },
+    "D": {
+     "total": 59,
+     "details": [
+      {
+       "id": "D-1-IV-1",
+       "p": 0.9978
+      },
+      {
+       "id": "D-2-IV-1",
+       "p": 0.955
+      },
+      {
+       "id": "D-3-IV-1",
+       "p": 0.9972
+      }
+     ]
+    }
+   },
+   "v2": {
+    "A": {
+     "total": 25,
+     "status": "insufficient",
+     "comps": [
+      {
+       "id": "A-1-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.996,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "A-2-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9953,
+       "modelAgrees": false,
+       "review": null
+      }
+     ]
+    },
+    "B": {
+     "total": 25,
+     "status": "insufficient",
+     "comps": [
+      {
+       "id": "B-1-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9943,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "B-2-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9953,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "B-3-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9947,
+       "modelAgrees": false,
+       "review": null
+      }
+     ]
+    },
+    "C": {
+     "total": 0,
+     "status": "insufficient",
+     "comps": [
+      {
+       "id": "C-1-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9994,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "C-2-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 1,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "C-3-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9966,
+       "modelAgrees": false,
+       "review": null
+      }
+     ]
+    },
+    "D": {
+     "total": 8,
+     "status": "insufficient",
+     "comps": [
+      {
+       "id": "D-1-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9939,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "D-2-IV-1",
+       "level": 0,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.9934,
+       "modelAgrees": false,
+       "review": null
+      },
+      {
+       "id": "D-3-IV-1",
+       "level": 1,
+       "practice": false,
+       "output": false,
+       "check": false,
+       "evidenceUnits": [],
+       "pEvidence": null,
+       "pAny": 0.994,
+       "modelAgrees": false,
+       "review": null
+      }
+     ]
+    }
+   }
+  }
+ ]
+}

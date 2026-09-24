@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import {splitCourse, splitUnits, analyzeUnits, scoreAbility, mergeCompetency, modelQuestions, levelOf, MODEL_POLICY} from '../assets/course-engine.js';
 import {ABILITIES} from '../assets/abilities.js';
 import {RUBRIC} from '../assets/rubric.js';
+import {SAMPLES, REAL_SYLLABI} from '../assets/samples.js';
 import {parseTokenizerJson, encodeWithData} from '../assets/laya-browser.mjs';
 
 const data = parseTokenizerJson(JSON.parse(fs.readFileSync(new URL('../model/tokenizer.json', import.meta.url))));
@@ -32,7 +33,7 @@ t('11 official IV competencies, each with a traceable rubric entry and one model
 
 t('no built-in example wording is embedded in the rules (no example detection)', () => {
   const src = fs.readFileSync(new URL('../assets/rubric.js', import.meta.url), 'utf8') + fs.readFileSync(new URL('../assets/course-engine.js', import.meta.url), 'utf8');
-  for (const ab of ABILITIES) for (const ex of [ab.good, ab.bad]) {
+  for (const ex of [...ABILITIES.flatMap(ab => [ab.good, ab.bad]), ...SAMPLES.map(s => s.text)]) {
     const plain = ex.replace(/\s/g, '');
     // 8-character Chinese phrases; generic product names such as "Perplexity" are allowed.
     for (let i = 0; i + 8 <= plain.length; i++) {
@@ -42,9 +43,19 @@ t('no built-in example wording is embedded in the rules (no example detection)',
   }
 });
 
+t('sample picker: unique ids, fictional samples labelled, real syllabi only as links', () => {
+  assert.equal(new Set(SAMPLES.map(s => s.id)).size, SAMPLES.length);
+  assert(SAMPLES.every(s => s.title && s.text.trim() && s.label && s.kind));
+  assert(SAMPLES.filter(s => !['good', 'bad'].includes(s.id)).every(s => s.kind.startsWith('虛構')));
+  assert(REAL_SYLLABI.every(r => /^https:\/\//.test(r.url) && !('text' in r)));
+});
+
 t('units split on blank lines, week headings and bullets', () => {
   const u = splitUnits('課程目標：略\n第 1 週：甲\n第 2–3 週：乙\n延續說明\n\n- 報告 20%\n- 考試 80%');
   assert.deepEqual(u, ['課程目標：略', '第 1 週：甲', '第 2–3 週：乙\n延續說明', '- 報告 20%', '- 考試 80%']);
+  // Schedule tables pasted from course systems.
+  assert.deepEqual(splitUnits('課程進度\n1\t2/18 導論\n2\t2/25 實作'), ['課程進度', '1\t2/18 導論', '2\t2/25 實作']);
+  assert.deepEqual(splitUnits('進度\n1 2/18 導論\n2 2/25 實作'), ['進度', '1 2/18 導論', '2 2/25 實作']);
 });
 
 const levels = (text, title = '測試課程') => {

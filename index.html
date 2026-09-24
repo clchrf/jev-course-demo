@@ -187,6 +187,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:var(--
 @media(max-width:640px){.overview{grid-template-columns:repeat(2,minmax(0,1fr))}.course{padding:18px}.row{grid-template-columns:minmax(0,1fr) 40px}.row .nm,.row .tg{grid-column:1/-1}.head{flex-wrap:wrap}.head h3{font-size:18px}.switch{margin-left:auto}.card{padding:18px}.result{padding:16px}.overview a{padding:12px}h1{font-size:28px}}
 </style>
 <link rel="stylesheet" href="assets/mobile.css">
+<link rel="stylesheet" href="assets/polish.css">
 </head>
 <body>
 <div class="wrap">
@@ -216,7 +217,16 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:var(--
     <label for="syllabus">課程綱要與教學活動</label>
     <textarea id="syllabus" rows="9" placeholder="貼上這門課的課程目標、教學活動、週次與評量方式。ABCD 都會使用這份完整內容。"></textarea>
     <div class="hint"><span>請保留活動與評量證據；長課綱會依模型容量分段，全段檢視。</span><span id="courseCount"></span></div>
-    <div class="toolbar actions"><div class="btns"><button class="btn" id="allGood">載入完整課程範例</button><button class="btn" id="allBad">載入空泛反例</button><button class="btn" id="clearCourse">清空</button></div><button class="btn primary" id="runBtn">開始檢視 ABCD</button></div>
+    <div class="samples-bar">
+      <span class="samples-lbl" id="samplesLbl">測試課綱</span>
+      <div class="samples" id="samples" role="group" aria-labelledby="samplesLbl"></div>
+    </div>
+    <p class="sample-note" id="sampleNote"></p>
+    <details class="real-links"><summary>真實公開課綱（開啟原網頁後貼上測試）</summary>
+      <ul id="realLinks"></ul>
+      <p>原文屬各校與授課教師著作權，本頁不收錄；請開啟連結、複製課程概述、進度與評量後貼上。校準報告只保存這些課綱的分數與等級。</p>
+    </details>
+    <div class="toolbar actions"><button class="btn" id="clearCourse">清空</button><button class="btn primary" id="runBtn">開始檢視 ABCD</button></div>
     <p id="runStatus" role="status">準備好後，按「開始檢視 ABCD」。首次會先載入模型。</p>
   </section>
   <nav class="mobile-nav" aria-label="手機快速導覽"><a href="#courseHeading">課程</a><a href="#card-A" aria-label="A 運用 AI 學習">A</a><a href="#card-B" aria-label="B 負責任使用 AI">B</a><a href="#card-C" aria-label="C 運用 AI 解決問題">C</a><a href="#card-D" aria-label="D AI 無法取代的能力">D</a></nav>

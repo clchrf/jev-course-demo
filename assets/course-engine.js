@@ -28,7 +28,8 @@ export function modelQuestions(compIds = Object.keys(RUBRIC)) {
 }
 
 // Teaching units: blank lines, and lines that open a new week / numbered item / bullet.
-const UNIT_START = /^\s*(?:第\s*[\d一二三四五六七八九十]+(?:\s*[–—\-~～至到、]\s*[\d一二三四五六七八九十]+)?\s*週|(?:W|Week)\s*\d+|\d{1,2}\s*[.、)）]|[-•*・●▪]\s)/i;
+// Schedule tables copied from university systems start rows with "1<Tab>" or "1 2/18".
+const UNIT_START = /^\s*(?:第\s*[\d一二三四五六七八九十]+(?:\s*[–—\-~～至到、]\s*[\d一二三四五六七八九十]+)?\s*週|(?:W|Week)\s*\d+|\d{1,2}\s*[.、)）]|\d{1,2}\t|\d{1,2}\s+\d{1,2}\/\d{1,2}|[-•*・●▪]\s)/i;
 export function splitUnits(text) {
   const units = []; let cur = [];
   const flush = () => { const t = cur.join('\n').trim(); if (t) units.push(t); cur = []; };
