@@ -78,7 +78,7 @@ aside details.seg-rest details.seg{padding-left:12px}
   .samples .chip{min-height:52px;justify-content:center;padding:8px 12px}
   .samples .chip b{font-size:15px}.samples .chip small{font-size:12px}
   .sample-note{font-size:13px;line-height:1.7}
-  .real-links{font-size:14px;padding:12px 14px}.real-links summary{min-height:44px;display:flex;align-items:center}
+  .real-links{font-size:14px;padding:12px 14px}.real-links summary{display:list-item;padding:10px 0}
   .real-links li{line-height:1.7}
   .course .actions{flex-direction:column-reverse;align-items:stretch}
   .course .actions .btn{width:100%}
