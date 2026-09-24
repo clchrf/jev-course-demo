@@ -1,0 +1,3034 @@
+{
+ "model": "laya multilingual quantized ONNX (onnxruntime-node)",
+ "createdAt": "2026-09-24T07:21:34.978Z",
+ "runs": {
+  "good": {
+   "input": "顧客關係管理與 AI 應用（餐旅系三年級）\n第 3–4 週「AI 工具評比工作坊」：學生分組比較 ChatGPT、Perplexity、NotebookLM 三種工具整理 200 則顧客評論的表現，依正確性、引用來源、耗時三項指標填寫評比表，並撰寫 500 字選用理由。期末繳交個人 AI 學習歷程日誌（每週至少 1 則反思），占學期成績 15%。\n\n第 6 週「AI 使用揭露與個資」：所有作業須附 AI 使用聲明表，標註使用工具、提示詞與修改比例。課堂以去識別化的真實客訴資料練習，學生需找出至少 3 處個資風險並提出遮罩方式；另以一則 AI 生成的假評論案例進行事實查核，繳交查核紀錄，列入平時成績。\n\n第 9–12 週期中專題：學生取得合作飯店 300 則線上評論，先人工標註 50 則作為對照，再用 AI 分類抱怨類型並計算誤判率。小組需繪製人機分工流程圖，說明哪些步驟交給 AI、哪些由人覆核，最後提出服務改善方案並向業師簡報，依評量尺規評分。\n\n第 15–16 週「服務情境角色扮演」：學生依 AI 分析出的抱怨類型，現場扮演櫃檯人員處理客訴，由同學扮演顧客；演練後小組討論哪些判斷必須由人做決定（例如是否給予補償），並撰寫反思，說明 AI 建議在真實情境中的限制。",
+   "chunks": [
+    "顧客關係管理與 AI 應用（餐旅系三年級）\n第 3–4 週「AI 工具評比工作坊」：學生分組比較 ChatGPT、Perplexity、NotebookLM 三種工具整理 200 則顧客評論的表現，依正確性、引用來源、耗時三項指標填寫評比表，並撰寫 500 字選用理由。期末繳交個人 AI 學習歷程日誌（每週至少 1 則反思），占學期成績 15%。\n\n",
+    "第 6 週「AI 使用揭露與個資」：所有作業須附 AI 使用聲明表，標註使用工具、提示詞與修改比例。課堂以去識別化的真實客訴資料練習，學生需找出至少 3 處個資風險並提出遮罩方式；另以一則 AI 生成的假評論案例進行事實查核，繳交查核紀錄，列入平時成績。\n\n",
+    "第 9–12 週期中專題：學生取得合作飯店 300 則線上評論，先人工標註 50 則作為對照，再用 AI 分類抱怨類型並計算誤判率。小組需繪製人機分工流程圖，說明哪些步驟交給 AI、哪些由人覆核，最後提出服務改善方案並向業師簡報，依評量尺規評分。\n\n",
+    "第 15–16 週「服務情境角色扮演」：學生依 AI 分析出的抱怨類型，現場扮演櫃檯人員處理客訴，由同學扮演顧客；演練後小組討論哪些判斷必須由人做決定（例如是否給予補償），並撰寫反思，說明 AI 建議在真實情境中的限制。"
+   ],
+   "abilities": {
+    "A": {
+     "total": 60,
+     "scores": {
+      "alignment": 60,
+      "concreteness": 40,
+      "supported": 99,
+      "boilerplate": 42
+     },
+     "best": 0,
+     "details": [
+      {
+       "id": "A-1-IV-1",
+       "p": 0.9999,
+       "segment": 0
+      },
+      {
+       "id": "A-2-IV-1",
+       "p": 0.9981,
+       "segment": 0
+      }
+     ],
+     "runs": [
+      {
+       "text": "顧客關係管理與 AI 應用（餐旅系三年級）\n第 3–4 週「AI 工具評比工作坊」：學生分組比較 ChatGPT、Perplexity、NotebookLM 三種工具整理 200 則顧客評論的表現，依正確性、引用來源、耗時三項指標填寫評比表，並撰寫 500 字選用理由。期末繳交個人 AI 學習歷程日誌（每週至少 1 則反思），占學期成績 15%。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.3958,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0032,
+          "1": 0.0953,
+          "2": 0.5738,
+          "3": 0.1578,
+          "4": 0.1699
+         },
+         "confidence": 0.2831,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5964,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0051,
+          "1": 0.4832,
+          "2": 0.4523,
+          "3": 0.0291,
+          "4": 0.0303
+         },
+         "confidence": 0.412,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.9903,
+         "confidence": 0.9903,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.5836,
+         "confidence": 0.5836,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9999,
+         "confidence": 0.9999,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9981,
+         "confidence": 0.9981,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 6 週「AI 使用揭露與個資」：所有作業須附 AI 使用聲明表，標註使用工具、提示詞與修改比例。課堂以去識別化的真實客訴資料練習，學生需找出至少 3 處個資風險並提出遮罩方式；另以一則 AI 生成的假評論案例進行事實查核，繳交查核紀錄，列入平時成績。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 1.3706,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.021,
+          "1": 0.6841,
+          "2": 0.2192,
+          "3": 0.0547,
+          "4": 0.021
+         },
+         "confidence": 0.4323,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.6649,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0073,
+          "1": 0.4929,
+          "2": 0.3953,
+          "3": 0.0367,
+          "4": 0.0678
+         },
+         "confidence": 0.3445,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.8291,
+         "confidence": 0.8291,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.6529,
+         "confidence": 0.6529,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9999,
+         "confidence": 0.9999,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9936,
+         "confidence": 0.9936,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 9–12 週期中專題：學生取得合作飯店 300 則線上評論，先人工標註 50 則作為對照，再用 AI 分類抱怨類型並計算誤判率。小組需繪製人機分工流程圖，說明哪些步驟交給 AI、哪些由人覆核，最後提出服務改善方案並向業師簡報，依評量尺規評分。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.3283,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0157,
+          "1": 0.2941,
+          "2": 0.2717,
+          "3": 0.1828,
+          "4": 0.2355
+         },
+         "confidence": 0.1111,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.4476,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0162,
+          "1": 0.6269,
+          "2": 0.2874,
+          "3": 0.0324,
+          "4": 0.0372
+         },
+         "confidence": 0.4089,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.5709,
+         "confidence": 0.5709,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.5657,
+         "confidence": 0.5657,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9497,
+         "confidence": 0.9497,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9926,
+         "confidence": 0.9926,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 15–16 週「服務情境角色扮演」：學生依 AI 分析出的抱怨類型，現場扮演櫃檯人員處理客訴，由同學扮演顧客；演練後小組討論哪些判斷必須由人做決定（例如是否給予補償），並撰寫反思，說明 AI 建議在真實情境中的限制。",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.174,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0189,
+          "1": 0.2713,
+          "2": 0.3739,
+          "3": 0.1885,
+          "4": 0.1474
+         },
+         "confidence": 0.1341,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5612,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0189,
+          "1": 0.5487,
+          "2": 0.3316,
+          "3": 0.0539,
+          "4": 0.0469
+         },
+         "confidence": 0.3344,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.9126,
+         "confidence": 0.9126,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.0733,
+         "confidence": 0.9267,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-1-IV-1": {
+         "type": "noul",
+         "noul": 0.8961,
+         "confidence": 0.8961,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9867,
+         "confidence": 0.9867,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      }
+     ]
+    },
+    "B": {
+     "total": 57,
+     "scores": {
+      "alignment": 60,
+      "concreteness": 40,
+      "supported": 85,
+      "boilerplate": 42
+     },
+     "best": 0,
+     "details": [
+      {
+       "id": "B-1-IV-1",
+       "p": 0.9949,
+       "segment": 2
+      },
+      {
+       "id": "B-2-IV-1",
+       "p": 0.9811,
+       "segment": 1
+      },
+      {
+       "id": "B-3-IV-1",
+       "p": 0.9997,
+       "segment": 0
+      }
+     ],
+     "runs": [
+      {
+       "text": "顧客關係管理與 AI 應用（餐旅系三年級）\n第 3–4 週「AI 工具評比工作坊」：學生分組比較 ChatGPT、Perplexity、NotebookLM 三種工具整理 200 則顧客評論的表現，依正確性、引用來源、耗時三項指標填寫評比表，並撰寫 500 字選用理由。期末繳交個人 AI 學習歷程日誌（每週至少 1 則反思），占學期成績 15%。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.4118,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0046,
+          "1": 0.1221,
+          "2": 0.5206,
+          "3": 0.1621,
+          "4": 0.1905
+         },
+         "confidence": 0.2343,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5964,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0051,
+          "1": 0.4832,
+          "2": 0.4523,
+          "3": 0.0291,
+          "4": 0.0303
+         },
+         "confidence": 0.412,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.8547,
+         "confidence": 0.8547,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.5836,
+         "confidence": 0.5836,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9396,
+         "confidence": 0.9396,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-2-IV-1": {
+         "type": "noul",
+         "noul": 0.8562,
+         "confidence": 0.8562,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9997,
+         "confidence": 0.9997,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 6 週「AI 使用揭露與個資」：所有作業須附 AI 使用聲明表，標註使用工具、提示詞與修改比例。課堂以去識別化的真實客訴資料練習，學生需找出至少 3 處個資風險並提出遮罩方式；另以一則 AI 生成的假評論案例進行事實查核，繳交查核紀錄，列入平時成績。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 1.3469,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0569,
+          "1": 0.635,
+          "2": 0.2333,
+          "3": 0.0541,
+          "4": 0.0208
+         },
+         "confidence": 0.3605,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.6649,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0073,
+          "1": 0.4929,
+          "2": 0.3953,
+          "3": 0.0367,
+          "4": 0.0678
+         },
+         "confidence": 0.3445,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.4309,
+         "confidence": 0.5691,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.6529,
+         "confidence": 0.6529,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9898,
+         "confidence": 0.9898,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9811,
+         "confidence": 0.9811,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9995,
+         "confidence": 0.9995,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 9–12 週期中專題：學生取得合作飯店 300 則線上評論，先人工標註 50 則作為對照，再用 AI 分類抱怨類型並計算誤判率。小組需繪製人機分工流程圖，說明哪些步驟交給 AI、哪些由人覆核，最後提出服務改善方案並向業師簡報，依評量尺規評分。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.2058,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0516,
+          "1": 0.2976,
+          "2": 0.2675,
+          "3": 0.16,
+          "4": 0.2233
+         },
+         "confidence": 0.0715,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.4476,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0162,
+          "1": 0.6269,
+          "2": 0.2874,
+          "3": 0.0324,
+          "4": 0.0372
+         },
+         "confidence": 0.4089,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.3588,
+         "confidence": 0.6412,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.5657,
+         "confidence": 0.5657,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9949,
+         "confidence": 0.9949,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-2-IV-1": {
+         "type": "noul",
+         "noul": 0.7077,
+         "confidence": 0.7077,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9952,
+         "confidence": 0.9952,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 15–16 週「服務情境角色扮演」：學生依 AI 分析出的抱怨類型，現場扮演櫃檯人員處理客訴，由同學扮演顧客；演練後小組討論哪些判斷必須由人做決定（例如是否給予補償），並撰寫反思，說明 AI 建議在真實情境中的限制。",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.1128,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0371,
+          "1": 0.2498,
+          "2": 0.4071,
+          "3": 0.1754,
+          "4": 0.1306
+         },
+         "confidence": 0.1266,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5612,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0189,
+          "1": 0.5487,
+          "2": 0.3316,
+          "3": 0.0539,
+          "4": 0.0469
+         },
+         "confidence": 0.3344,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.1362,
+         "confidence": 0.8638,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.0733,
+         "confidence": 0.9267,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-1-IV-1": {
+         "type": "noul",
+         "noul": 0.0346,
+         "confidence": 0.9654,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-2-IV-1": {
+         "type": "noul",
+         "noul": 0.0204,
+         "confidence": 0.9796,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9586,
+         "confidence": 0.9586,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      }
+     ]
+    },
+    "C": {
+     "total": 60,
+     "scores": {
+      "alignment": 60,
+      "concreteness": 36,
+      "supported": 99,
+      "boilerplate": 43
+     },
+     "best": 2,
+     "details": [
+      {
+       "id": "C-1-IV-1",
+       "p": 1,
+       "segment": 0
+      },
+      {
+       "id": "C-2-IV-1",
+       "p": 0.9999,
+       "segment": 0
+      },
+      {
+       "id": "C-3-IV-1",
+       "p": 1,
+       "segment": 0
+      }
+     ],
+     "runs": [
+      {
+       "text": "顧客關係管理與 AI 應用（餐旅系三年級）\n第 3–4 週「AI 工具評比工作坊」：學生分組比較 ChatGPT、Perplexity、NotebookLM 三種工具整理 200 則顧客評論的表現，依正確性、引用來源、耗時三項指標填寫評比表，並撰寫 500 字選用理由。期末繳交個人 AI 學習歷程日誌（每週至少 1 則反思），占學期成績 15%。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.4056,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0029,
+          "1": 0.1076,
+          "2": 0.5517,
+          "3": 0.1565,
+          "4": 0.1812
+         },
+         "confidence": 0.2638,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5964,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0051,
+          "1": 0.4832,
+          "2": 0.4523,
+          "3": 0.0291,
+          "4": 0.0303
+         },
+         "confidence": 0.412,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.9994,
+         "confidence": 0.9994,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.5836,
+         "confidence": 0.5836,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-1-IV-1": {
+         "type": "noul",
+         "noul": 1,
+         "confidence": 1,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9999,
+         "confidence": 0.9999,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-3-IV-1": {
+         "type": "noul",
+         "noul": 1,
+         "confidence": 1,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 6 週「AI 使用揭露與個資」：所有作業須附 AI 使用聲明表，標註使用工具、提示詞與修改比例。課堂以去識別化的真實客訴資料練習，學生需找出至少 3 處個資風險並提出遮罩方式；另以一則 AI 生成的假評論案例進行事實查核，繳交查核紀錄，列入平時成績。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 1.503,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0117,
+          "1": 0.6323,
+          "2": 0.2397,
+          "3": 0.0739,
+          "4": 0.0424
+         },
+         "confidence": 0.3719,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.6649,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0073,
+          "1": 0.4929,
+          "2": 0.3953,
+          "3": 0.0367,
+          "4": 0.0678
+         },
+         "confidence": 0.3445,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.9928,
+         "confidence": 0.9928,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.6529,
+         "confidence": 0.6529,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9998,
+         "confidence": 0.9998,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9979,
+         "confidence": 0.9979,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9998,
+         "confidence": 0.9998,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 9–12 週期中專題：學生取得合作飯店 300 則線上評論，先人工標註 50 則作為對照，再用 AI 分類抱怨類型並計算誤判率。小組需繪製人機分工流程圖，說明哪些步驟交給 AI、哪些由人覆核，最後提出服務改善方案並向業師簡報，依評量尺規評分。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.4114,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0139,
+          "1": 0.2557,
+          "2": 0.2897,
+          "3": 0.1865,
+          "4": 0.2542
+         },
+         "confidence": 0.1124,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.4476,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0162,
+          "1": 0.6269,
+          "2": 0.2874,
+          "3": 0.0324,
+          "4": 0.0372
+         },
+         "confidence": 0.4089,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.9905,
+         "confidence": 0.9905,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.5657,
+         "confidence": 0.5657,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9989,
+         "confidence": 0.9989,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9906,
+         "confidence": 0.9906,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-3-IV-1": {
+         "type": "noul",
+         "noul": 0.996,
+         "confidence": 0.996,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 15–16 週「服務情境角色扮演」：學生依 AI 分析出的抱怨類型，現場扮演櫃檯人員處理客訴，由同學扮演顧客；演練後小組討論哪些判斷必須由人做決定（例如是否給予補償），並撰寫反思，說明 AI 建議在真實情境中的限制。",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.1764,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0206,
+          "1": 0.283,
+          "2": 0.3497,
+          "3": 0.1927,
+          "4": 0.154
+         },
+         "confidence": 0.1239,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5612,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0189,
+          "1": 0.5487,
+          "2": 0.3316,
+          "3": 0.0539,
+          "4": 0.0469
+         },
+         "confidence": 0.3344,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.8932,
+         "confidence": 0.8932,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.0733,
+         "confidence": 0.9267,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9928,
+         "confidence": 0.9928,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9834,
+         "confidence": 0.9834,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-3-IV-1": {
+         "type": "noul",
+         "noul": 0.8691,
+         "confidence": 0.8691,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      }
+     ]
+    },
+    "D": {
+     "total": 42,
+     "scores": {
+      "alignment": 59,
+      "concreteness": 36,
+      "supported": 31,
+      "boilerplate": 43
+     },
+     "best": 2,
+     "details": [
+      {
+       "id": "D-1-IV-1",
+       "p": 0.9997,
+       "segment": 0
+      },
+      {
+       "id": "D-2-IV-1",
+       "p": 0.5162,
+       "segment": 1
+      },
+      {
+       "id": "D-3-IV-1",
+       "p": 0.9993,
+       "segment": 0
+      }
+     ],
+     "runs": [
+      {
+       "text": "顧客關係管理與 AI 應用（餐旅系三年級）\n第 3–4 週「AI 工具評比工作坊」：學生分組比較 ChatGPT、Perplexity、NotebookLM 三種工具整理 200 則顧客評論的表現，依正確性、引用來源、耗時三項指標填寫評比表，並撰寫 500 字選用理由。期末繳交個人 AI 學習歷程日誌（每週至少 1 則反思），占學期成績 15%。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.2596,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0055,
+          "1": 0.1135,
+          "2": 0.632,
+          "3": 0.1139,
+          "4": 0.1351
+         },
+         "confidence": 0.3268,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5964,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0051,
+          "1": 0.4832,
+          "2": 0.4523,
+          "3": 0.0291,
+          "4": 0.0303
+         },
+         "confidence": 0.412,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.6312,
+         "confidence": 0.6312,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.5836,
+         "confidence": 0.5836,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9997,
+         "confidence": 0.9997,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-2-IV-1": {
+         "type": "noul",
+         "noul": 0.2839,
+         "confidence": 0.7161,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9993,
+         "confidence": 0.9993,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 6 週「AI 使用揭露與個資」：所有作業須附 AI 使用聲明表，標註使用工具、提示詞與修改比例。課堂以去識別化的真實客訴資料練習，學生需找出至少 3 處個資風險並提出遮罩方式；另以一則 AI 生成的假評論案例進行事實查核，繳交查核紀錄，列入平時成績。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 1.3417,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0479,
+          "1": 0.6448,
+          "2": 0.2432,
+          "3": 0.0461,
+          "4": 0.0181
+         },
+         "confidence": 0.387,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.6649,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0073,
+          "1": 0.4929,
+          "2": 0.3953,
+          "3": 0.0367,
+          "4": 0.0678
+         },
+         "confidence": 0.3445,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.2206,
+         "confidence": 0.7794,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.6529,
+         "confidence": 0.6529,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9993,
+         "confidence": 0.9993,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-2-IV-1": {
+         "type": "noul",
+         "noul": 0.5162,
+         "confidence": 0.5162,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9935,
+         "confidence": 0.9935,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 9–12 週期中專題：學生取得合作飯店 300 則線上評論，先人工標註 50 則作為對照，再用 AI 分類抱怨類型並計算誤判率。小組需繪製人機分工流程圖，說明哪些步驟交給 AI、哪些由人覆核，最後提出服務改善方案並向業師簡報，依評量尺規評分。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.3512,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0315,
+          "1": 0.2734,
+          "2": 0.2665,
+          "3": 0.1696,
+          "4": 0.259
+         },
+         "confidence": 0.0887,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.4476,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0162,
+          "1": 0.6269,
+          "2": 0.2874,
+          "3": 0.0324,
+          "4": 0.0372
+         },
+         "confidence": 0.4089,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.308,
+         "confidence": 0.692,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.5657,
+         "confidence": 0.5657,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9975,
+         "confidence": 0.9975,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-2-IV-1": {
+         "type": "noul",
+         "noul": 0.37,
+         "confidence": 0.63,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9947,
+         "confidence": 0.9947,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "第 15–16 週「服務情境角色扮演」：學生依 AI 分析出的抱怨類型，現場扮演櫃檯人員處理客訴，由同學扮演顧客；演練後小組討論哪些判斷必須由人做決定（例如是否給予補償），並撰寫反思，說明 AI 建議在真實情境中的限制。",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.1291,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0136,
+          "1": 0.2627,
+          "2": 0.4286,
+          "3": 0.1714,
+          "4": 0.1238
+         },
+         "confidence": 0.1715,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5612,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0189,
+          "1": 0.5487,
+          "2": 0.3316,
+          "3": 0.0539,
+          "4": 0.0469
+         },
+         "confidence": 0.3344,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.2026,
+         "confidence": 0.7974,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.0733,
+         "confidence": 0.9267,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9921,
+         "confidence": 0.9921,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-2-IV-1": {
+         "type": "noul",
+         "noul": 0.0881,
+         "confidence": 0.9119,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9129,
+         "confidence": 0.9129,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      }
+     ]
+    }
+   }
+  },
+  "bad": {
+   "input": "顧客關係管理與 AI 應用（餐旅系三年級）\n讓學生善用各種 AI 工具，提升學習效能，培養自主學習與終身學習的能力。\n\n教導學生 AI 倫理與資安觀念，建立負責任使用 AI 的態度。\n\n運用 AI 分析問題並提出解決方案，培養學生跨領域整合與邏輯思維能力。\n\n強調同理心、溝通與創造力等 AI 無法取代的能力，培養學生人文關懷的素養。",
+   "chunks": [
+    "顧客關係管理與 AI 應用（餐旅系三年級）\n讓學生善用各種 AI 工具，提升學習效能，培養自主學習與終身學習的能力。\n\n",
+    "教導學生 AI 倫理與資安觀念，建立負責任使用 AI 的態度。\n\n",
+    "運用 AI 分析問題並提出解決方案，培養學生跨領域整合與邏輯思維能力。\n\n",
+    "強調同理心、溝通與創造力等 AI 無法取代的能力，培養學生人文關懷的素養。"
+   ],
+   "abilities": {
+    "A": {
+     "total": 48,
+     "scores": {
+      "alignment": 64,
+      "concreteness": 48,
+      "supported": 72,
+      "boilerplate": 9
+     },
+     "best": 3,
+     "details": [
+      {
+       "id": "A-1-IV-1",
+       "p": 0.9215,
+       "segment": 0
+      },
+      {
+       "id": "A-2-IV-1",
+       "p": 0.939,
+       "segment": 2
+      }
+     ],
+     "runs": [
+      {
+       "text": "顧客關係管理與 AI 應用（餐旅系三年級）\n讓學生善用各種 AI 工具，提升學習效能，培養自主學習與終身學習的能力。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.3786,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0054,
+          "1": 0.0946,
+          "2": 0.5634,
+          "3": 0.189,
+          "4": 0.1475
+         },
+         "confidence": 0.2718,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.8012,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0162,
+          "1": 0.3974,
+          "2": 0.4262,
+          "3": 0.0893,
+          "4": 0.0709
+         },
+         "confidence": 0.2541,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.922,
+         "confidence": 0.922,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9016,
+         "confidence": 0.9016,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9215,
+         "confidence": 0.9215,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-2-IV-1": {
+         "type": "noul",
+         "noul": 0.933,
+         "confidence": 0.933,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "教導學生 AI 倫理與資安觀念，建立負責任使用 AI 的態度。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.42,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.011,
+          "1": 0.2391,
+          "2": 0.3058,
+          "3": 0.2072,
+          "4": 0.2369
+         },
+         "confidence": 0.1169,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5786,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0211,
+          "1": 0.5096,
+          "2": 0.3751,
+          "3": 0.058,
+          "4": 0.0362
+         },
+         "confidence": 0.3302,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.752,
+         "confidence": 0.752,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.7811,
+         "confidence": 0.7811,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-1-IV-1": {
+         "type": "noul",
+         "noul": 0.6067,
+         "confidence": 0.6067,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9188,
+         "confidence": 0.9188,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "運用 AI 分析問題並提出解決方案，培養學生跨領域整合與邏輯思維能力。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.3828,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0076,
+          "1": 0.0899,
+          "2": 0.5571,
+          "3": 0.2027,
+          "4": 0.1426
+         },
+         "confidence": 0.2662,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.98,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0149,
+          "1": 0.3022,
+          "2": 0.4594,
+          "3": 0.1348,
+          "4": 0.0886
+         },
+         "confidence": 0.213,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.9142,
+         "confidence": 0.9142,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9464,
+         "confidence": 0.9464,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-1-IV-1": {
+         "type": "noul",
+         "noul": 0.8657,
+         "confidence": 0.8657,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-2-IV-1": {
+         "type": "noul",
+         "noul": 0.939,
+         "confidence": 0.939,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "強調同理心、溝通與創造力等 AI 無法取代的能力，培養學生人文關懷的素養。",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.5401,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0063,
+          "1": 0.0674,
+          "2": 0.5137,
+          "3": 0.2048,
+          "4": 0.2077
+         },
+         "confidence": 0.2499,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.9123,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0137,
+          "1": 0.313,
+          "2": 0.4953,
+          "3": 0.1034,
+          "4": 0.0746
+         },
+         "confidence": 0.2553,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.719,
+         "confidence": 0.719,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9087,
+         "confidence": 0.9087,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-1-IV-1": {
+         "type": "noul",
+         "noul": 0.8522,
+         "confidence": 0.8522,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "A-2-IV-1": {
+         "type": "noul",
+         "noul": 0.87,
+         "confidence": 0.87,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      }
+     ]
+    },
+    "B": {
+     "total": 40,
+     "scores": {
+      "alignment": 62,
+      "concreteness": 39,
+      "supported": 38,
+      "boilerplate": 22
+     },
+     "best": 1,
+     "details": [
+      {
+       "id": "B-1-IV-1",
+       "p": 0.9218,
+       "segment": 1
+      },
+      {
+       "id": "B-2-IV-1",
+       "p": 0.8095,
+       "segment": 1
+      },
+      {
+       "id": "B-3-IV-1",
+       "p": 0.9475,
+       "segment": 0
+      }
+     ],
+     "runs": [
+      {
+       "text": "顧客關係管理與 AI 應用（餐旅系三年級）\n讓學生善用各種 AI 工具，提升學習效能，培養自主學習與終身學習的能力。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.3639,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0153,
+          "1": 0.1225,
+          "2": 0.4957,
+          "3": 0.2161,
+          "4": 0.1504
+         },
+         "confidence": 0.2015,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.8012,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0162,
+          "1": 0.3974,
+          "2": 0.4262,
+          "3": 0.0893,
+          "4": 0.0709
+         },
+         "confidence": 0.2541,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.3574,
+         "confidence": 0.6426,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9016,
+         "confidence": 0.9016,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-1-IV-1": {
+         "type": "noul",
+         "noul": 0.4301,
+         "confidence": 0.5699,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-2-IV-1": {
+         "type": "noul",
+         "noul": 0.0373,
+         "confidence": 0.9627,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9475,
+         "confidence": 0.9475,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "教導學生 AI 倫理與資安觀念，建立負責任使用 AI 的態度。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.4861,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0255,
+          "1": 0.2087,
+          "2": 0.2924,
+          "3": 0.2013,
+          "4": 0.2722
+         },
+         "confidence": 0.0948,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5786,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0211,
+          "1": 0.5096,
+          "2": 0.3751,
+          "3": 0.058,
+          "4": 0.0362
+         },
+         "confidence": 0.3302,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.375,
+         "confidence": 0.625,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.7811,
+         "confidence": 0.7811,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9218,
+         "confidence": 0.9218,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-2-IV-1": {
+         "type": "noul",
+         "noul": 0.8095,
+         "confidence": 0.8095,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-3-IV-1": {
+         "type": "noul",
+         "noul": 0.844,
+         "confidence": 0.844,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "運用 AI 分析問題並提出解決方案，培養學生跨領域整合與邏輯思維能力。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.2852,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0118,
+          "1": 0.1051,
+          "2": 0.5899,
+          "3": 0.1723,
+          "4": 0.1209
+         },
+         "confidence": 0.2799,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.98,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0149,
+          "1": 0.3022,
+          "2": 0.4594,
+          "3": 0.1348,
+          "4": 0.0886
+         },
+         "confidence": 0.213,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.1135,
+         "confidence": 0.8865,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9464,
+         "confidence": 0.9464,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-1-IV-1": {
+         "type": "noul",
+         "noul": 0.0665,
+         "confidence": 0.9335,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-2-IV-1": {
+         "type": "noul",
+         "noul": 0.1264,
+         "confidence": 0.8736,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9318,
+         "confidence": 0.9318,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "強調同理心、溝通與創造力等 AI 無法取代的能力，培養學生人文關懷的素養。",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.4526,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0127,
+          "1": 0.0811,
+          "2": 0.5211,
+          "3": 0.2112,
+          "4": 0.174
+         },
+         "confidence": 0.2349,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.9123,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0137,
+          "1": 0.313,
+          "2": 0.4953,
+          "3": 0.1034,
+          "4": 0.0746
+         },
+         "confidence": 0.2553,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.1421,
+         "confidence": 0.8579,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9087,
+         "confidence": 0.9087,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-1-IV-1": {
+         "type": "noul",
+         "noul": 0.0127,
+         "confidence": 0.9873,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-2-IV-1": {
+         "type": "noul",
+         "noul": 0.0141,
+         "confidence": 0.9859,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "B-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9234,
+         "confidence": 0.9234,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      }
+     ]
+    },
+    "C": {
+     "total": 56,
+     "scores": {
+      "alignment": 66,
+      "concreteness": 39,
+      "supported": 96,
+      "boilerplate": 22
+     },
+     "best": 1,
+     "details": [
+      {
+       "id": "C-1-IV-1",
+       "p": 0.9951,
+       "segment": 1
+      },
+      {
+       "id": "C-2-IV-1",
+       "p": 0.9878,
+       "segment": 1
+      },
+      {
+       "id": "C-3-IV-1",
+       "p": 0.9797,
+       "segment": 1
+      }
+     ],
+     "runs": [
+      {
+       "text": "顧客關係管理與 AI 應用（餐旅系三年級）\n讓學生善用各種 AI 工具，提升學習效能，培養自主學習與終身學習的能力。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.2677,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0063,
+          "1": 0.1239,
+          "2": 0.5753,
+          "3": 0.1849,
+          "4": 0.1096
+         },
+         "confidence": 0.2773,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.8012,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0162,
+          "1": 0.3974,
+          "2": 0.4262,
+          "3": 0.0893,
+          "4": 0.0709
+         },
+         "confidence": 0.2541,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.8911,
+         "confidence": 0.8911,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9016,
+         "confidence": 0.9016,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9658,
+         "confidence": 0.9658,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9702,
+         "confidence": 0.9702,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-3-IV-1": {
+         "type": "noul",
+         "noul": 0.8919,
+         "confidence": 0.8919,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "教導學生 AI 倫理與資安觀念，建立負責任使用 AI 的態度。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.6458,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0074,
+          "1": 0.1622,
+          "2": 0.3081,
+          "3": 0.2219,
+          "4": 0.3004
+         },
+         "confidence": 0.1367,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5786,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0211,
+          "1": 0.5096,
+          "2": 0.3751,
+          "3": 0.058,
+          "4": 0.0362
+         },
+         "confidence": 0.3302,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.9584,
+         "confidence": 0.9584,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.7811,
+         "confidence": 0.7811,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9951,
+         "confidence": 0.9951,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9878,
+         "confidence": 0.9878,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9797,
+         "confidence": 0.9797,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "運用 AI 分析問題並提出解決方案，培養學生跨領域整合與邏輯思維能力。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.4152,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0078,
+          "1": 0.1032,
+          "2": 0.5186,
+          "3": 0.2071,
+          "4": 0.1634
+         },
+         "confidence": 0.2329,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.98,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0149,
+          "1": 0.3022,
+          "2": 0.4594,
+          "3": 0.1348,
+          "4": 0.0886
+         },
+         "confidence": 0.213,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.9315,
+         "confidence": 0.9315,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9464,
+         "confidence": 0.9464,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9833,
+         "confidence": 0.9833,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9163,
+         "confidence": 0.9163,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9408,
+         "confidence": 0.9408,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "強調同理心、溝通與創造力等 AI 無法取代的能力，培養學生人文關懷的素養。",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.5398,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0082,
+          "1": 0.084,
+          "2": 0.4857,
+          "3": 0.2037,
+          "4": 0.2183
+         },
+         "confidence": 0.2204,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.9123,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0137,
+          "1": 0.313,
+          "2": 0.4953,
+          "3": 0.1034,
+          "4": 0.0746
+         },
+         "confidence": 0.2553,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.5674,
+         "confidence": 0.5674,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9087,
+         "confidence": 0.9087,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9385,
+         "confidence": 0.9385,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-2-IV-1": {
+         "type": "noul",
+         "noul": 0.9148,
+         "confidence": 0.9148,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "C-3-IV-1": {
+         "type": "noul",
+         "noul": 0.6548,
+         "confidence": 0.6548,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      }
+     ]
+    },
+    "D": {
+     "total": 39,
+     "scores": {
+      "alignment": 64,
+      "concreteness": 39,
+      "supported": 32,
+      "boilerplate": 22
+     },
+     "best": 1,
+     "details": [
+      {
+       "id": "D-1-IV-1",
+       "p": 0.9874,
+       "segment": 1
+      },
+      {
+       "id": "D-2-IV-1",
+       "p": 0.6719,
+       "segment": 3
+      },
+      {
+       "id": "D-3-IV-1",
+       "p": 0.9826,
+       "segment": 1
+      }
+     ],
+     "runs": [
+      {
+       "text": "顧客關係管理與 AI 應用（餐旅系三年級）\n讓學生善用各種 AI 工具，提升學習效能，培養自主學習與終身學習的能力。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.3179,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.012,
+          "1": 0.1277,
+          "2": 0.5297,
+          "3": 0.1913,
+          "4": 0.1392
+         },
+         "confidence": 0.2274,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.8012,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0162,
+          "1": 0.3974,
+          "2": 0.4262,
+          "3": 0.0893,
+          "4": 0.0709
+         },
+         "confidence": 0.2541,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.5692,
+         "confidence": 0.5692,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9016,
+         "confidence": 0.9016,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-1-IV-1": {
+         "type": "noul",
+         "noul": 0.854,
+         "confidence": 0.854,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-2-IV-1": {
+         "type": "noul",
+         "noul": 0.5043,
+         "confidence": 0.5043,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9765,
+         "confidence": 0.9765,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "教導學生 AI 倫理與資安觀念，建立負責任使用 AI 的態度。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.5553,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.01,
+          "1": 0.1559,
+          "2": 0.3641,
+          "3": 0.2089,
+          "4": 0.2611
+         },
+         "confidence": 0.1418,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.5786,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0211,
+          "1": 0.5096,
+          "2": 0.3751,
+          "3": 0.058,
+          "4": 0.0362
+         },
+         "confidence": 0.3302,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.322,
+         "confidence": 0.678,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.7811,
+         "confidence": 0.7811,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-1-IV-1": {
+         "type": "noul",
+         "noul": 0.9874,
+         "confidence": 0.9874,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-2-IV-1": {
+         "type": "noul",
+         "noul": 0.1903,
+         "confidence": 0.8097,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9826,
+         "confidence": 0.9826,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "運用 AI 分析問題並提出解決方案，培養學生跨領域整合與邏輯思維能力。\n\n",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.2761,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0094,
+          "1": 0.1091,
+          "2": 0.5933,
+          "3": 0.1722,
+          "4": 0.116
+         },
+         "confidence": 0.2866,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.98,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0149,
+          "1": 0.3022,
+          "2": 0.4594,
+          "3": 0.1348,
+          "4": 0.0886
+         },
+         "confidence": 0.213,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.6692,
+         "confidence": 0.6692,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9464,
+         "confidence": 0.9464,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-1-IV-1": {
+         "type": "noul",
+         "noul": 0.8529,
+         "confidence": 0.8529,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-2-IV-1": {
+         "type": "noul",
+         "noul": 0.3926,
+         "confidence": 0.6074,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9726,
+         "confidence": 0.9726,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      },
+      {
+       "text": "強調同理心、溝通與創造力等 AI 無法取代的能力，培養學生人文關懷的素養。",
+       "answers": {
+        "alignment": {
+         "type": "score",
+         "score": 2.5046,
+         "legend": {
+          "0": "unrelated",
+          "1": "only mentions the ability",
+          "2": "some relevant activity",
+          "3": "clearly relevant practice",
+          "4": "explicit relevant practice and assessment"
+         },
+         "probabilities": {
+          "0": 0.0082,
+          "1": 0.0786,
+          "2": 0.5045,
+          "3": 0.2177,
+          "4": 0.1909
+         },
+         "confidence": 0.2342,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "concreteness": {
+         "type": "score",
+         "score": 1.9123,
+         "legend": {
+          "0": "no activity",
+          "1": "vague goals only",
+          "2": "a named activity",
+          "3": "specific tasks and outputs",
+          "4": "specific tasks, outputs and grading"
+         },
+         "probabilities": {
+          "0": 0.0137,
+          "1": 0.313,
+          "2": 0.4953,
+          "3": 0.1034,
+          "4": 0.0746
+         },
+         "confidence": 0.2553,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "supported": {
+         "type": "noul",
+         "noul": 0.6035,
+         "confidence": 0.6035,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "boilerplate": {
+         "type": "noul",
+         "noul": 0.9087,
+         "confidence": 0.9087,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-1-IV-1": {
+         "type": "noul",
+         "noul": 0.732,
+         "confidence": 0.732,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-2-IV-1": {
+         "type": "noul",
+         "noul": 0.6719,
+         "confidence": 0.6719,
+         "action": {
+          "act_probability": 1
+         }
+        },
+        "D-3-IV-1": {
+         "type": "noul",
+         "noul": 0.9046,
+         "confidence": 0.9046,
+         "action": {
+          "act_probability": 1
+         }
+        }
+       }
+      }
+     ]
+    }
+   }
+  }
+ }
+}

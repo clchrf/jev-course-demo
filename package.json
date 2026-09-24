@@ -1,0 +1,13 @@
+{
+  "name": "jev-course-demo",
+  "private": true,
+  "type": "module",
+  "description": "Static demo (served by GitHub Pages). Node tooling here is only for offline tests and calibration.",
+  "scripts": {
+    "test": "node tests/course-engine.test.mjs",
+    "calibrate": "node calibration/run.mjs"
+  },
+  "devDependencies": {
+    "onnxruntime-node": "1.30.0"
+  }
+}

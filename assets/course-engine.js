@@ -1,34 +1,34 @@
+import {RUBRIC, CUES, GOAL_FRAME, VIA_GOAL, NEGATION, AI_TERMS, COURSE_LEVEL_AI} from './rubric.js';
+
+// Four Jev-style indicators, redefined on the evidence rubric (see README「評分規則」).
 export const METRICS = [
-  ['alignment', '對到定義', '教的是這項能力，不只是「用到 AI」'],
-  ['concreteness', '看得到做法', '有活動、週次、評量，不只有目標'],
-  ['supported', '成果不誇大', '活動做得到寫出來的成果'],
-  ['boilerplate', '不是範本', '換一門課就貼不上去'],
+  ['alignment', '對到定義', '有學生練習的細項比例'],
+  ['concreteness', '看得到做法', '練習是否有產出、檢核與具體細節'],
+  ['supported', '成果不誇大', '有練習的單元 ÷（練習單元＋只寫目標的宣稱）'],
+  ['boilerplate', '不是範本', '相關敘述中非空泛目標句的比例'],
 ];
 
-const DEFINITIONS = {
-  A: 'students choose AI tools and reflect on their own learning with AI',
-  B: 'students disclose AI use, protect data, verify information and take responsibility',
-  C: 'students analyse real problems with AI, verify results and plan human-AI workflows',
-  D: 'students make their own decisions, interact with people and develop ideas from real-world observation',
-};
-const DETAIL_QUESTIONS = {
-  A: ['Do students evaluate and choose AI tools for a professional learning task?', 'Do students record or reflect on their own learning process with AI?'],
-  B: ['Must students disclose AI use or check copyright and privacy rules?', 'Do students check AI errors, misinformation or data security risks?', 'Do students make a responsible judgment about the impact of using AI?'],
-  C: ['Do students use AI to analyse a real problem and verify a solution?', 'Do students examine AI limitations and combine knowledge from different fields?', 'Do students design a human-AI workflow and evaluate its errors or quality?'],
-  D: ['Do students make a decision themselves instead of following AI automatically?', 'Do students practise understanding other people through communication or role-play?', 'Do students observe real-world needs and create their own ideas with AI support?'],
-};
-export function questionsFor(ab) {
-  const definition = DEFINITIONS[ab.id];
-  const q = {
-    alignment: {type:'score', instructions:`How closely do the described teaching activities match this ability: ${definition}`, criteria:['unrelated','only mentions the ability','some relevant activity','clearly relevant practice','explicit relevant practice and assessment']},
-    concreteness: {type:'score', instructions:'How specific are the student activities and assessment described in this course?', criteria:['no activity','vague goals only','a named activity','specific tasks and outputs','specific tasks, outputs and grading']},
-    supported: {type:'noul', instructions:`Do the described student activities provide evidence supporting the claimed ability: ${definition}`},
-    boilerplate: {type:'noul', instructions:'Is the text only a vague slogan about cultivating abilities?'},
-  };
-  ab.comps.forEach(([id], i) => {
-    q[id] = {type:'noul',instructions:DETAIL_QUESTIONS[ab.id][i]};
-  });
-  return q;
+// Model thresholds chosen on the calibration set only (calibration/results/calibration.json).
+export const MODEL_POLICY = {corroborate: 0.5, hint: 0.9};
+
+// Model-facing questions: one noul per competency, asked of every teaching unit.
+const CRITERIA = {true: 'yes, the text describes students doing exactly this', false: 'no, the text is about something else, only states a goal, or says it is not done'};
+export function modelQuestions(compIds = Object.keys(RUBRIC)) {
+  return Object.fromEntries(compIds.map(id => [id, {type: 'noul', instructions: RUBRIC[id].model, criteria: CRITERIA}]));
+}
+
+// Teaching units: blank lines, and lines that open a new week / numbered item / bullet.
+const UNIT_START = /^\s*(?:第\s*[\d一二三四五六七八九十]+(?:\s*[–—\-~～至到、]\s*[\d一二三四五六七八九十]+)?\s*週|(?:W|Week)\s*\d+|\d{1,2}\s*[.、)）]|[-•*・●▪]\s)/i;
+export function splitUnits(text) {
+  const units = []; let cur = [];
+  const flush = () => { const t = cur.join('\n').trim(); if (t) units.push(t); cur = []; };
+  for (const line of text.split(/\r?\n/)) {
+    if (!line.trim()) { flush(); continue; }
+    if (UNIT_START.test(line) && cur.length) flush();
+    cur.push(line);
+  }
+  flush();
+  return units;
 }
 
 // Leave room for the longest question prefix; never silently drop the end of a course.
@@ -52,15 +52,105 @@ export function splitCourse(text, encode, budget) {
   return chunks;
 }
 
-export function aggregate(ab, runs) {
-  let best = 0;
-  runs.forEach((r,i) => { if(r.answers.alignment.score > runs[best].answers.alignment.score) best=i; });
-  const a = runs[best].answers;
-  const scores = {alignment:Math.round(a.alignment.score*25),concreteness:Math.round(a.concreteness.score*25),supported:Math.round(a.supported.noul*100),boilerplate:Math.round((1-a.boilerplate.noul)*100)};
-  const details = ab.comps.map(([id]) => {
-    let segment=0;
-    runs.forEach((r,i)=>{ if(r.answers[id].noul>runs[segment].answers[id].noul) segment=i; });
-    return {id,p:runs[segment].answers[id].noul,segment};
+const norm = s => s.replace(/[\s　]+/g, '').replace(/[，,。．.、；;：:！!？?「」『』（）()]/g, '');
+const sentencesOf = unit => unit.split(/(?<=[。！？!?；;\n])/u).map(s => s.trim()).filter(Boolean);
+const clausesOf = s => s.split(/[，,、：:]/u).filter(Boolean);
+
+// Cue text with negated clauses removed.
+function positive(s) { return clausesOf(s).filter(c => !NEGATION.test(c)).join('，'); }
+function isGoalOnly(s) {
+  if (CUES.specific.test(s) || CUES.output.test(s)) return false;
+  return VIA_GOAL.test(s) || (GOAL_FRAME.test(s) && !CUES.activity.test(s));
+}
+
+// Rule pass over every unit. Pure text; no model involved.
+// `title` only supplies course-level AI context; it is never counted as evidence.
+export function analyzeUnits(units, title = '') {
+  const courseAI = AI_TERMS.test(title) || units.some(u => AI_TERMS.test(u));
+  return units.map(unit => {
+    const sents = sentencesOf(unit).map(s => {
+      const pos = positive(s), goal = isGoalOnly(pos);
+      return {s, pos, goal, act: !goal && CUES.activity.test(pos), out: !goal && CUES.output.test(pos), chk: !goal && CUES.check.test(pos), spec: !goal && CUES.specific.test(pos)};
+    });
+    const unitAI = AI_TERMS.test(unit);
+    const flags = {act: sents.some(x => x.act), out: sents.some(x => x.out), chk: sents.some(x => x.chk), spec: sents.some(x => x.spec)};
+    const comps = {};
+    for (const [id, r] of Object.entries(RUBRIC)) {
+      const aiOk = courseAI;
+      const hits = aiOk ? sents.filter(x => r.anchors.some(a => a.test(x.pos))) : [];
+      const named = aiOk ? sents.filter(x => !hits.includes(x) && r.mentions.test(x.pos)) : [];
+      if (!hits.length && !named.length) continue;
+      const concrete = hits.filter(x => !x.goal);
+      const practice = concrete.length > 0 && flags.act;
+      comps[id] = {
+        mention: true, practice,
+        // Output / check count for the whole unit when students practise there; otherwise only when
+        // they sit in the same sentence as the competency (e.g. a grading line "查核紀錄 20%").
+        output: practice ? flags.out : concrete.some(x => x.out),
+        check: practice ? flags.chk : concrete.some(x => x.chk),
+        specific: practice && flags.spec,
+        claims: [...hits, ...named].filter(x => x.goal).map(x => x.s),
+        sentences: [...hits, ...named].map(x => x.s),
+        aiFromCourse: !unitAI && !COURSE_LEVEL_AI.has(id),
+      };
+    }
+    return {text: unit, comps};
   });
-  return {scores,total:Math.round(Object.values(scores).reduce((a,b)=>a+b,0)/4),details,best,runs};
+}
+
+export function levelOf(e) {
+  if (!e || (!e.mention && !e.practice)) return 0;
+  if (!e.practice) return 1;
+  return e.output && e.check ? 4 : e.output || e.check ? 3 : 2;
+}
+
+// Merge evidence for one competency across the whole course. Set-based (OR over distinct units),
+// so reordering units or repeating identical text cannot raise the level.
+export function mergeCompetency(id, analysis) {
+  const seen = new Set(), units = [];
+  analysis.forEach((u, i) => {
+    const e = u.comps[id]; if (!e) return;
+    const key = norm(u.text); if (seen.has(key)) return; seen.add(key);
+    units.push({index: i, ...e});
+  });
+  const any = k => units.some(u => u[k]);
+  const merged = {mention: units.length > 0, practice: any('practice'), output: any('output'), check: any('check'), specific: any('specific')};
+  return {...merged, level: levelOf(merged), units,
+    claims: [...new Set(units.flatMap(u => u.claims).map(norm))].length};
+}
+
+// modelP: array (per unit) of {compId: P(yes)}; may be null when the model has not run.
+export function scoreAbility(ab, analysis, modelP, policy = MODEL_POLICY) {
+  const comps = ab.comps.map(([id]) => {
+    const m = mergeCompetency(id, analysis);
+    const pAt = i => modelP?.[i]?.[id];
+    const evidence = m.units.filter(u => u.practice).map(u => u.index);
+    const pEvidence = evidence.length && modelP ? Math.max(...evidence.map(pAt)) : null;
+    let pAny = null, pAnyUnit = null;
+    if (modelP) modelP.forEach((p, i) => { if (pAny === null || p[id] > pAny) { pAny = p[id]; pAnyUnit = i; } });
+    let review = null;
+    if (m.practice && m.units.filter(u => u.practice).every(u => u.aiFromCourse)) review = '練習段落本身未提到 AI，請確認此活動與 AI 相關';
+    else if (m.level >= 2 && pEvidence !== null && pEvidence < policy.corroborate) review = '尺規找到學生練習，但模型未佐證（機率偏低）';
+    else if (m.level <= 1 && pAny !== null && pAny >= policy.hint) review = '模型判為相關，但尺規未見學生練習證據';
+    return {id, ...m, pEvidence, pAny, pAnyUnit, review, corroborated: m.level >= 2 && pEvidence !== null && pEvidence >= policy.corroborate};
+  });
+  const n = comps.length, levels = comps.map(c => c.level);
+  const practiced = comps.filter(c => c.practice);
+  const evidenceUnits = new Set(practiced.flatMap(c => c.units.filter(u => u.practice).map(u => norm(analysis[u.index].text))));
+  const claimSet = new Set(), relevant = new Set(), generic = new Set();
+  comps.forEach(c => c.units.forEach(u => {
+    u.claims.forEach(s => claimSet.add(norm(s)));
+    u.sentences.forEach(s => { relevant.add(norm(s)); if (u.claims.includes(s)) generic.add(norm(s)); });
+  }));
+  const pct = x => Math.round(x * 100);
+  const scores = {
+    alignment: pct(practiced.length / n),
+    concreteness: practiced.length ? pct(practiced.reduce((a, c) => a + (c.output + c.check + c.specific) / 3, 0) / practiced.length) : 0,
+    supported: evidenceUnits.size + claimSet.size ? pct(evidenceUnits.size / (evidenceUnits.size + claimSet.size)) : null,
+    boilerplate: relevant.size ? pct(1 - generic.size / relevant.size) : null,
+  };
+  const total = pct(levels.reduce((a, b) => a + b, 0) / (4 * n));
+  const reviews = comps.filter(c => c.review).length;
+  const status = reviews ? 'review' : practiced.length === 0 ? 'insufficient' : 'ok';
+  return {total, scores, comps, status, reviews};
 }
