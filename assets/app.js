@@ -1,11 +1,14 @@
 import { ABILITIES } from './abilities.js';
-import { METRICS, questionsFor, aggregate } from './course-engine.js';
+import { RUBRIC, LEVELS } from './rubric.js';
+import { METRICS, MODEL_POLICY, modelQuestions, splitUnits, analyzeUnits, scoreAbility } from './course-engine.js';
 const $ = id => document.getElementById(id);
 const esc = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const grade = s => s>=80?['很好','g']:s>=50?['尚可','a']:['要補強','r'];
+// 75 = average L3 (practice plus output or check); 50 = average L2 (students practise).
+const grade = s => s==null?['無相關敘述','']:s>=75?['很好','g']:s>=50?['尚可','a']:['要補強','r'];
 const colors = {g:'var(--green)',a:'var(--amber)',r:'var(--red)'};
+const pct = p => p==null?'–':Math.round(p*100)+'%';
 let agent, loading, running=false, revision=0, active='D', calls=0;
-let results={}, lastInput=null;
+let results={}, lastInput=null, course=null;
 const states={};
 
 function modelState(kind,label,info){ $('led').className='led '+kind; $('mstate').textContent=label; $('minfo').textContent=info; }
@@ -54,58 +57,85 @@ function renderCards(){
     <div class="head"><span class="badge">${ab.id}</span><h3>${ab.name}</h3><label class="switch"><span>本課程涵蓋</span><input id="on-${ab.id}" type="checkbox" checked aria-label="本課程涵蓋 ${ab.id} ${ab.name}"></label></div>
     <div class="body"><p class="desc">${ab.desc}</p><p class="q">${ab.q}</p>
     <p class="hint">與其他向度共用上方完整課綱；關閉此向度會排除評分。</p>
-    <blockquote class="evidence" id="evidence-${ab.id}">檢視後顯示模型判為最相關的課綱段落。</blockquote>
+    <blockquote class="evidence" id="evidence-${ab.id}">檢視後顯示有學生練習證據的課綱段落。</blockquote>
     <p class="warn">${ab.warn}</p>
-    <div class="result idle" id="rs-${ab.id}"><div class="rhead"><span class="lbl">AI 檢視（Laya）<span class="spin"></span></span><span class="total"><b id="tot-${ab.id}">–</b><span id="grade-${ab.id}">尚未檢視</span></span></div>
+    <div class="result idle" id="rs-${ab.id}"><div class="rhead"><span class="lbl">尺規分數（證據等級換算）<span class="spin"></span></span><span class="total"><b id="tot-${ab.id}">–</b><span id="grade-${ab.id}">尚未檢視</span></span></div>
+    <p class="status" id="status-${ab.id}" hidden></p>
     ${METRICS.map(([key,name,sub])=>`<div class="row"><div class="nm"><b>${name}</b><small>${sub}</small></div><div class="bar"><i id="bar-${ab.id}-${key}"></i></div><div class="sc" id="sc-${ab.id}-${key}">–</div><div class="tg" id="tag-${ab.id}-${key}"></div></div>`).join('')}
     <p class="note" id="note-${ab.id}"></p></div>
     <details class="comp-details" ${matchMedia("(max-width:640px)").matches ? "" : "open"}><summary>核心能力細項 · ${ab.comps.length} 項</summary><div class="detail-list">
-    ${ab.comps.map(([id,name,desc])=>`<div class="detail-item"><header><code>${id}</code><output id="p-${id}">尚未檢視</output></header><h4>${name}</h4><p>${desc}</p><div class="bar"><i id="db-${id}"></i></div><p id="feedback-${id}">檢視後顯示機率與原文對照。</p><details><summary>提問與對照原文</summary><p>${esc(questionsFor(ab)[id].instructions)}</p><blockquote class="evidence" id="de-${id}">尚未檢視</blockquote></details></div>`).join('')}
+    ${ab.comps.map(([id,name,desc])=>{const r=RUBRIC[id];return `<div class="detail-item"><header><code>${id}</code><output id="p-${id}">尚未檢視</output></header><h4>${name}</h4><p>${desc}</p><div class="bar"><i id="db-${id}"></i></div>
+    <ul class="flags" id="fl-${id}" aria-label="證據類型"></ul>
+    <p id="feedback-${id}">檢視後顯示證據等級與原文對照。</p>
+    <p class="mprob" id="mp-${id}"></p><p class="review" id="rv-${id}" hidden></p>
+    <details><summary>尺規依據、模型提問與對照原文</summary><p><b>官方定義依據：</b>${esc(r.trace)}</p><p><b>練習：</b>${esc(r.practice)}<br><b>產出：</b>${esc(r.output)}<br><b>檢核：</b>${esc(r.checkHint)}</p><p><b>送入 Laya 的問題：</b>${esc(r.model)}</p><blockquote class="evidence" id="de-${id}">尚未檢視</blockquote></details></div>`;}).join('')}
     </div></details></div></article>`).join('');
   ABILITIES.forEach(ab=>$('on-'+ab.id).addEventListener('change',()=>{
     invalidate(); $('card-'+ab.id).classList.toggle('off',!$('on-'+ab.id).checked);
   }));
 }
+const FLAG_NAMES=[['mention','提及'],['practice','學生練習'],['output','具體產出'],['check','驗證／反思／評量']];
+function modelLine(c,r){
+  if(r.modelError)return '模型未執行：'+r.modelError;
+  if(r.modelPending)return '模型判斷機率（Laya）：背景運算中…';
+  const parts=[];
+  if(c.pEvidence!=null)parts.push(`練習段落 P(是) ${pct(c.pEvidence)}`);
+  if(c.pAny!=null)parts.push(`全課程最高 ${pct(c.pAny)}（第 ${c.pAnyUnit+1} 段）`);
+  const cal=c.modelCalibration, rel=cal.auroc==null?'校準集無正例，可靠度未知':`校準 AUROC ${cal.auroc}（正例僅 ${cal.pos} 門）${cal.auroc<0.7?'，不可靠':''}`;
+  return `模型判斷機率（Laya，未計入分數）：${parts.join('；')||'–'}。${c.modelAgrees?'與尺規方向一致':'與尺規方向不一致'}。${rel}。`;
+}
 function paint(ab){
   const r=results[ab.id], status=states[ab.id]||'尚未檢視';
   $('rs-'+ab.id).classList.toggle('idle',!r);
-  $('rs-'+ab.id).classList.toggle('busy',status==='檢視中');
+  $('rs-'+ab.id).classList.toggle('busy',status==='檢視中'||!!r?.modelPending);
   $('tot-'+ab.id).textContent=r?r.total:'–';
   $('grade-'+ab.id).textContent=r?grade(r.total)[0]:status;
   $('grade-'+ab.id).className=r?grade(r.total)[1]:'';
+  const st=$('status-'+ab.id);
+  st.hidden=!r||(r.status==='ok'&&!r.modelError);
+  if(r)st.textContent=r.status==='insufficient'?'證據不足：沒有任何細項找到學生練習，分數只反映是否提及。':r.status==='review'?`需人工複核：${r.reviews} 項細項的練習段落本身未提到 AI，請確認活動與 AI 相關。`:r.modelError?'模型未能執行，以下僅為尺規結果，需人工複核。':'';
   METRICS.forEach(([key])=>{
     const s=r?.scores[key];
-    $('bar-'+ab.id+'-'+key).style.width=r?s+'%':'0';
-    $('bar-'+ab.id+'-'+key).style.background=r?colors[grade(s)[1]]:'';
-    $('sc-'+ab.id+'-'+key).textContent=r?s:'–';
+    $('bar-'+ab.id+'-'+key).style.width=r&&s!=null?s+'%':'0';
+    $('bar-'+ab.id+'-'+key).style.background=r&&s!=null?colors[grade(s)[1]]:'';
+    $('sc-'+ab.id+'-'+key).textContent=r?(s??'—'):'–';
     $('tag-'+ab.id+'-'+key).textContent=r?grade(s)[0]:'';
     $('tag-'+ab.id+'-'+key).className='tg '+(r?grade(s)[1]:'');
   });
-  $('evidence-'+ab.id).textContent=r?`課綱第 ${r.best+1}／${r.runs.length} 段（此向度 alignment 最高）\n${r.runs[r.best].text}`:'檢視後顯示模型判為最相關的課綱段落。';
-  $('note-'+ab.id).textContent=r?`${r.runs.length} 段完整檢視 · ${(r.ms/1000).toFixed(1)} 秒 · 四項等權平均，供人工複核。`:'';
+  const ev=r?[...new Set(r.comps.flatMap(c=>c.units.filter(u=>u.practice).map(u=>u.index)))].sort((a,b)=>a-b):[];
+  $('evidence-'+ab.id).textContent=!r?'檢視後顯示有學生練習證據的課綱段落。':ev.length?`有學生練習證據的段落：第 ${ev.map(i=>i+1).join('、')}／${course.units.length} 段\n\n`+ev.slice(0,3).map(i=>`【第 ${i+1} 段】${course.units[i]}`).join('\n\n')+(ev.length>3?`\n\n…另有 ${ev.length-3} 段，見細項對照。`:''):`全部 ${course.units.length} 段都沒有找到此向度的學生練習證據。`;
+  $('note-'+ab.id).textContent=r?`${r.comps.filter(c=>c.practice).length} / ${r.comps.length} 細項有練習（≥L2）· 分數＝各細項證據等級平均 ÷ 4 × 100，不是四項指標平均 · 全課綱 ${course.units.length} 段合併檢視。`:'';
   ab.comps.forEach(([id],i)=>{
-    const d=r?.details[i];
-    $('p-'+id).textContent=d?`P(是) ${Math.round(d.p*100)}%`:status;
-    $('db-'+id).style.width=d?d.p*100+'%':'0';
-    $('feedback-'+id).textContent=d?(d.p>=.5?'模型判為有相關活動；請核對實作與評量證據。':'模型支持度較低；建議補上學生任務、成果與評量方式。'): '檢視後顯示機率與原文對照。';
-    $('de-'+id).textContent=d?`第 ${d.segment+1} 段 · ${r.runs[d.segment].text}`:'尚未檢視';
+    const c=r?.comps[i];
+    $('p-'+id).textContent=c?`${LEVELS[c.level][0]} ${LEVELS[c.level][1]}`:status;
+    $('p-'+id).className=c?'lv'+c.level:'';
+    $('db-'+id).style.width=c?c.level*25+'%':'0';
+    $('db-'+id).style.background=c?colors[grade(c.level*25)[1]]:'';
+    $('fl-'+id).innerHTML=c?FLAG_NAMES.map(([k,n])=>`<li class="${c[k]?'on':''}">${c[k]?'✓':'–'} ${n}</li>`).join(''):'';
+    $('feedback-'+id).textContent=!c?'檢視後顯示證據等級與原文對照。':c.level>=4?'有學生練習、具體產出，以及驗證、反思或評量。':c.level===3?`有學生練習；尚缺${c.output?'驗證、反思或評量':'具體產出'}。`:c.level===2?'有學生練習；尚缺具體產出與驗證／評量。':c.level===1?'只提到能力或目標，沒有找到學生實際練習。':'課綱中沒有找到此細項的相關敘述。';
+    $('mp-'+id).textContent=c?modelLine(c,r):'';
+    $('rv-'+id).hidden=!c?.review;$('rv-'+id).textContent=c?.review?'需人工複核：'+c.review:'';
+    $('de-'+id).textContent=!c?'尚未檢視':c.units.length?c.units.map(u=>`【第 ${u.index+1} 段 · ${u.practice?'練習':'僅提及'}】${u.sentences.join('')}`).join('\n\n'):'沒有對應的課綱文字。';
   });
 }
 function overview(){
-  $('overview').innerHTML=ABILITIES.map(ab=>`<a href="#card-${ab.id}"><span>${ab.id}　${ab.name}</span><strong>${results[ab.id]?.total??'–'} <small>/ 100</small></strong><small>${results[ab.id]?results[ab.id].details.filter(d=>d.p>=.5).length+' / '+ab.comps.length+' 細項達提示門檻':states[ab.id]||'尚未檢視'}</small></a>`).join('');
+  $('overview').innerHTML=ABILITIES.map(ab=>{const r=results[ab.id];return `<a href="#card-${ab.id}"><span>${ab.id}　${ab.name}</span><strong>${r?.total??'–'} <small>/ 100</small></strong><small>${r?`${r.comps.filter(c=>c.practice).length} / ${ab.comps.length} 細項有練習`+(r.reviews?` · ${r.reviews} 項需複核`:'')+(r.status==='insufficient'?' · 證據不足':''):states[ab.id]||'尚未檢視'}</small></a>`;}).join('');
   $('abtabs').innerHTML=ABILITIES.map(ab=>`<button type="button" class="${active===ab.id?'on':''}" aria-pressed="${active===ab.id}" data-ab="${ab.id}"><span class="l">${ab.id}</span><span class="n">${results[ab.id]?.total??'–'}</span></button>`).join('');
   $('abtabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{active=b.dataset.ab;overview();renderLog();});
 }
 function renderLog(){
-  const ab=ABILITIES.find(a=>a.id===active), r=results[active];
-  if(!r){$('logBody').innerHTML=`<p class="lead">能力 ${active}：${states[active]||'尚未檢視'}</p><details><summary>查看問題設定</summary><pre>${esc(JSON.stringify(questionsFor(ab),null,2))}</pre></details>`;return;}
-  $('logBody').innerHTML=`<div class="req">agent.predict(courseSegment, questions)<br>${Object.keys(questionsFor(ab)).length} 個問題 × ${r.runs.length} 段<br>輸出 0 tokens · ${(r.ms/1000).toFixed(1)} 秒</div>
-    <p class="lead">score 回傳 0–4 分級期望值；noul 回傳 P(是)。文字建議由頁面規則產生，原文直接引用課綱。</p>
-    <details><summary>完整提問設定</summary><pre>${esc(JSON.stringify(questionsFor(ab),null,2))}</pre></details>
-    ${r.runs.map((run,i)=>`<details ${i===r.best?'open':''}><summary>第 ${i+1} 段 · 原文與回傳</summary><blockquote class="evidence">${esc(run.text)}</blockquote><pre>${esc(JSON.stringify(run.answers,null,2))}</pre></details>`).join('')}`;
+  const ab=ABILITIES.find(a=>a.id===active), r=results[active], ids=ab.comps.map(([id])=>id), qs=modelQuestions(ids);
+  if(!r){$('logBody').innerHTML=`<p class="lead">能力 ${active}：${states[active]||'尚未檢視'}</p><details><summary>查看問題設定</summary><pre>${esc(JSON.stringify(qs,null,2))}</pre></details>`;return;}
+  const raw=course.modelRaw;
+  $('logBody').innerHTML=`<div class="req">agent.predict(teachingUnit, questions)<br>${ids.length} 個問題 × ${course.units.length} 段<br>輸出 0 tokens${r.modelPending?' · 運算中':''}</div>
+    <p class="lead">noul 回傳 P(是)。分數由尺規比對原文產生；模型機率只列出並標示是否與尺規方向一致（門檻 ${MODEL_POLICY.agree}），不計分，也不觸發複核（校準顯示這類旗標抓不到錯誤）。</p>
+    <details><summary>完整提問設定</summary><pre>${esc(JSON.stringify(qs,null,2))}</pre></details>
+    ${course.units.map((u,i)=>{const rule=Object.fromEntries(ids.filter(id=>course.analysis[i].comps[id]).map(id=>{const e=course.analysis[i].comps[id];return [id,{practice:e.practice,output:e.output,check:e.check}];}));
+      const m=raw?.[i]?raw[i].map(p=>({text:p.text===u?'(同本段)':p.text,answers:Object.fromEntries(ids.map(id=>[id,p.answers[id]]))})):'尚未取得';
+      return `<details ${Object.keys(rule).some(id=>rule[id].practice)?'open':''}><summary>第 ${i+1} 段 · 原文、尺規比對與模型回傳</summary><blockquote class="evidence">${esc(u)}</blockquote><pre>${esc(JSON.stringify({rubric:rule,laya:m},null,2))}</pre></details>`;}).join('')}`;
 }
 function invalidate(){
-  revision++; results={};lastInput=null;$('exportBtn').disabled=true;
+  revision++; results={};lastInput=null;course=null;$('exportBtn').disabled=true;
   ABILITIES.forEach(ab=>{states[ab.id]=$('on-'+ab.id).checked?'待重新檢視':'本課程未涵蓋';paint(ab);});
   overview();renderLog();
   $('courseCount').textContent=Array.from($('syllabus').value).length+' 字';
@@ -124,60 +154,75 @@ async function runCourse(){
   const enabled=ABILITIES.filter(ab=>$('on-'+ab.id).checked);
   if(!enabled.length){$('runStatus').textContent='請至少開啟一項「本課程涵蓋」。';return;}
   invalidate();const version=revision;
-  running=true;$('runStatus').textContent='正在準備模型與課綱…';$('runBtn').disabled=true;$('runBtn').textContent='檢視中…';
+  running=true;$('runBtn').disabled=true;$('runBtn').textContent='檢視中…';
+  const start=performance.now();
   try{
-    await loadModel();
-    if(version!==revision)return;
-    // headMaxLen caps question text/options. Reserve additional boundary tokens.
-
-    const input=title+'\n'+text;
-    const chunks=await rpc('prepare',input);
-    if(version!==revision)return;
-    lastInput={title,text,chunks,model:'Laya multilingual (quantized ONNX)',createdAt:new Date().toISOString()};
-    for(const ab of enabled){
-      states[ab.id]='檢視中';paint(ab);overview();
-      const questions=questionsFor(ab), entries=Object.entries(questions), runs=[];
-      const start=performance.now();
-      for(let i=0;i<chunks.length;i++){
-        $('runStatus').textContent=`正在檢視 ${ab.id} · 第 ${i+1}／${chunks.length} 段課綱（共 ${entries.length} 個問題）`;
-        const answers={};
-        // Smaller batches limit WASM memory while retaining all questions.
-        for(let j=0;j<entries.length;j+=3){
-          if(version!==revision)return;
-          const batch=Object.fromEntries(entries.slice(j,j+3));
-          const output=await agent.predict(chunks[i],batch);
-          if(version!==revision)return;
-          Object.assign(answers,output.answers);calls+=Object.keys(batch).length;$('mCalls').textContent=calls;
-          await new Promise(resolve=>setTimeout(resolve,0));
+    // 1) Rubric pass: instant and deterministic.
+    const units=splitUnits(text), analysis=analyzeUnits(units,title);
+    course={title,units,analysis,modelP:null,modelRaw:null};
+    lastInput={title,text,units,model:'Laya multilingual (quantized ONNX)',createdAt:new Date().toISOString()};
+    for(const ab of enabled){results[ab.id]={...scoreAbility(ab,analysis,null),modelPending:true};states[ab.id]='完成';paint(ab);}
+    active=enabled[enabled.length-1].id;overview();renderLog();
+    $('runStatus').textContent=`尺規結果已完成（${units.length} 段）。Laya 正在背景逐段運算…`;
+    // 2) Laya pass: every unit, every enabled competency.
+    const ids=enabled.flatMap(ab=>ab.comps.map(([id])=>id)), entries=Object.entries(modelQuestions(ids));
+    try{
+      await loadModel();
+      if(version!==revision)return;
+      const modelP=[], modelRaw=[];
+      for(let i=0;i<units.length;i++){
+        const pieces=await rpc('prepare',units[i]);
+        if(version!==revision)return;
+        const p={}, raw=[];
+        for(let k=0;k<pieces.length;k++){
+          $('runStatus').textContent=`尺規結果已完成。Laya 運算第 ${i+1}／${units.length} 段${pieces.length>1?`（第 ${k+1}／${pieces.length} 部分）`:''}，${ids.length} 個問題…`;
+          const answers={};
+          // Smaller batches limit WASM memory while retaining all questions.
+          for(let j=0;j<entries.length;j+=3){
+            if(version!==revision)return;
+            const output=await agent.predict(pieces[k],Object.fromEntries(entries.slice(j,j+3)));
+            if(version!==revision)return;
+            Object.assign(answers,output.answers);calls+=Math.min(3,entries.length-j);$('mCalls').textContent=calls;
+            await new Promise(resolve=>setTimeout(resolve,0));
+          }
+          raw.push({text:pieces[k],answers});
+          for(const id of ids)p[id]=Math.max(p[id]??0,answers[id].noul);
         }
-        runs.push({text:chunks[i],answers});
+        modelP.push(p);modelRaw.push(raw);
       }
-      results[ab.id]={...aggregate(ab,runs),ms:performance.now()-start};
-      states[ab.id]='完成';active=ab.id;paint(ab);overview();renderLog();
-      $('mLast').textContent=(results[ab.id].ms/1000).toFixed(1)+' s';
+      course.modelP=modelP;course.modelRaw=modelRaw;
+      for(const ab of enabled){results[ab.id]=scoreAbility(ab,analysis,modelP);paint(ab);}
+      $('runStatus').textContent=`已完成 ${enabled.length} 個向度、${ids.length} 個細項、${units.length} 段課綱。分數依尺規比對原文；Laya 機率另列，供人工複核。`;
+    }catch(e){
+      if(version!==revision)return;
+      console.error(e);
+      for(const ab of enabled){results[ab.id]={...scoreAbility(ab,analysis,null),modelError:e.message||String(e)};paint(ab);}
+      $('runStatus').textContent='尺規結果已完成，但 Laya 未能執行：'+(e.message||e)+'。可按「開始檢視 ABCD」重試。';
     }
-    $('runStatus').textContent=`已完成 ${enabled.length} 個向度、${enabled.reduce((n,a)=>n+a.comps.length,0)} 個細項。結果來自實際模型，請搭配原文人工複核。`;
-    $('exportBtn').disabled=false;
+    $('mLast').textContent=((performance.now()-start)/1000).toFixed(1)+' s';
+    overview();renderLog();$('exportBtn').disabled=false;
   }catch(e){
     console.error(e);
     $('runStatus').textContent='檢視未完成：'+(e.message||e)+'。可按「開始檢視 ABCD」重試。';
     ABILITIES.forEach(ab=>{if(states[ab.id]==='檢視中'){states[ab.id]='檢視失敗';paint(ab);}});overview();
   }finally{
     running=false;$('runBtn').disabled=false;$('runBtn').textContent='開始檢視 ABCD';
-    ABILITIES.forEach(ab=>$('rs-'+ab.id).classList.remove('busy'));
     if(version!==revision)$('runStatus').textContent='內容已更新，舊版檢視已停止。請重新檢視 ABCD。';
   }
 }
 renderCards();fillCourse('good');
 ABILITIES.forEach(ab=>{states[ab.id]='尚未檢視';paint(ab);});overview();renderLog();
-$('runStatus').textContent='範例已填入。按「開始檢視 ABCD」取得實際模型結果。';
+$('runStatus').textContent='範例已填入。按「開始檢視 ABCD」取得結果。';
 $('allGood').onclick=()=>fillCourse('good');$('allBad').onclick=()=>fillCourse('bad');
 $('clearCourse').onclick=()=>{$('syllabus').value='';$('courseName').value='';invalidate();};
 $('syllabus').oninput=invalidate;$('courseName').oninput=invalidate;
 $('runBtn').onclick=runCourse;
 $('loadBtn').onclick=()=>loadModel().catch(()=>{});
 $('exportBtn').onclick=()=>{
-  if(!lastInput)return;
-  const blob=new Blob([JSON.stringify({...lastInput,method:'Four equally weighted metrics; strongest alignment segment; maximum per-competency probability across segments. Not an official student assessment.',abilities:ABILITIES.map(ab=>({id:ab.id,name:ab.name,definitions:ab.comps,included:$('on-'+ab.id).checked,questions:questionsFor(ab),result:results[ab.id]??null}))},null,2)],{type:'application/json'});
+  if(!lastInput||!course)return;
+  const method='Evidence rubric v2: each competency gets L0–L4 from rule-based cues traced to the official IV definitions, merged across all teaching units (deduplicated, order-independent). Ability score = mean level / 4 × 100. Laya noul probabilities are reported separately and only flag items for human review. Not an official MOE scale and not the 0–5 scale of the other slide deck.';
+  const blob=new Blob([JSON.stringify({...lastInput,method,modelPolicy:MODEL_POLICY,levels:LEVELS,
+    units:course.units.map((u,i)=>({index:i+1,text:u,rubric:course.analysis[i].comps,laya:course.modelRaw?.[i]??null})),
+    abilities:ABILITIES.map(ab=>({id:ab.id,name:ab.name,definitions:ab.comps,included:$('on-'+ab.id).checked,questions:modelQuestions(ab.comps.map(([id])=>id)),result:results[ab.id]??null}))},null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='課程人才圖像檢視.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);
 };

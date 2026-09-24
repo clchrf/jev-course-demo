@@ -193,7 +193,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:var(--
   <header>
     <div>
       <h1>Jev 課程計畫檢視</h1>
-      <p class="sub">一門課，一次檢視 ABCD。依大專院校人才圖像的 11 項核心能力，示範 Jev 的「資料 → 提問 → 機率 → 評分」流程。實際判讀使用開源 Laya。</p>
+      <p class="sub">一門課，一次檢視 ABCD。依大專院校人才圖像的 11 項核心能力，分數依證據尺規比對課綱原文；開源 Laya 模型在瀏覽器內推論，機率另列供對照，不計入分數。未串接 Jev 官方 API。</p>
     </div>
     <div class="facts">
       <div class="fact"><b>4 / 11</b><span>能力向度 / 核心細項</span></div>
@@ -230,7 +230,7 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:var(--
     <aside aria-label="Laya 呼叫紀錄">
       <div>
         <h2>Laya 呼叫紀錄</h2>
-        <p class="lead">資料 → 問題設定 → 原始回傳 → 畫面分數</p>
+        <p class="lead">資料 → 問題設定 → 原始回傳（機率另列，不計分）</p>
       </div>
       <div class="meters">
         <div><b class="tab" id="mBackend">–</b><span>執行後端</span></div>
@@ -239,21 +239,23 @@ pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;background:var(--
       </div>
       <div class="abtabs" id="abtabs"></div>
       <div id="logBody"><p class="lead">執行檢視後，在此選擇 A–D 查看送入的問題、分段原文與模型回傳。</p></div>
-      <p class="fine">示範資料，不代表實際案例；分數僅供參考，未經嚴謹驗證。</p>
+      <p class="fine">示範資料，不代表實際案例。尺規與校準案例標籤為暫定，未經教師或專家標註；分數僅供人工複核參考。</p>
     </aside>
   </div>
 
   <section class="method" aria-labelledby="mTitle">
-    <h2 id="mTitle">Jev 的用法：把評分拆成明確問題</h2>
-    <p>同一份課綱 → 每個向度的判斷問題 → 結構化機率 → 四項檢視與核心能力細項。「Laya 呼叫紀錄」可查看實際送入模型的設定與原始回傳。</p>
-    <div class="tw"><table><thead><tr><th>畫面項目</th><th>欄位</th><th>判斷問題</th><th>換算方式</th></tr></thead><tbody>
-      <tr><td>對到定義</td><td><code>alignment</code></td><td data-label="判斷問題">教學內容有多貼近該能力定義？</td><td data-label="換算方式">score：0–4 期望值 × 25</td></tr>
-      <tr><td>看得到做法</td><td><code>concreteness</code></td><td data-label="判斷問題">活動、成果與評量有多具體？</td><td data-label="換算方式">score：0–4 期望值 × 25</td></tr>
-      <tr><td>成果不誇大</td><td><code>supported</code></td><td data-label="判斷問題">描述的活動是否支持宣稱的能力？</td><td data-label="換算方式">noul：P(是) × 100</td></tr>
-      <tr><td>不是範本</td><td><code>boilerplate</code></td><td data-label="判斷問題">能否不改文字就貼到別的課程？</td><td data-label="換算方式">noul：[1 − P(是)] × 100</td></tr>
+    <h2 id="mTitle">評分方式：證據尺規，模型機率另列</h2>
+    <p>課綱先依空白行、週次與條列切成教學段落。每個細項依官方 IV 定義列出可觀察的證據，逐段比對後合併整門課的證據（相同段落只算一次，段落順序不影響結果），得到證據等級：</p>
+    <div class="tw"><table><thead><tr><th>等級</th><th>名稱</th><th>判定條件</th><th>換算</th></tr></thead><tbody>
+      <tr><td>L0</td><td data-label="名稱">未見</td><td data-label="判定條件">課綱沒有提到此細項</td><td data-label="換算">0</td></tr>
+      <tr><td>L1</td><td data-label="名稱">僅提及</td><td data-label="判定條件">只寫能力名稱或目標（「培養…能力」），或活動被否定（「不安排…」）</td><td data-label="換算">25</td></tr>
+      <tr><td>L2</td><td data-label="名稱">有練習</td><td data-label="判定條件">同一段落有此細項的具體敘述，且有學生活動（週次、實作、分組、訪談…）</td><td data-label="換算">50</td></tr>
+      <tr><td>L3</td><td data-label="名稱">有產出或檢核</td><td data-label="判定條件">L2，加上具體產出（繳交、紀錄、報告…）或驗證／反思／評量其中之一</td><td data-label="換算">75</td></tr>
+      <tr><td>L4</td><td data-label="名稱">產出且檢核</td><td data-label="判定條件">L2，加上具體產出與驗證／反思／評量兩者</td><td data-label="換算">100</td></tr>
     </tbody></table></div>
-    <p>四項等權平均為 0–100 檢視分數；80 以上為「很好」、50–79 為「尚可」、未滿 50 為「要補強」。11 個核心細項各以一個可觀察行為提問，並非完整能力測量，顯示 P(是)；50% 是 Demo 的提示門檻，不代表學生已具備能力。</p>
-    <p>課綱依空白行與模型容量分段後，細項取各段最高機率，四項檢視取與該向度最相關段落的結果。這是展示用的彙整規則，不是教育部官方評分；也不等同另一份簡報的 0–5 課程培養程度量尺。原文與機率供人工複核，未經正式效度驗證。</p>
+    <p>向度分數＝所含細項等級的平均 ÷ 4 × 100（75 以上「很好」＝平均達 L3；50–74「尚可」＝平均達 L2；未滿 50「要補強」）。四項指標只作診斷，不再平均成總分：對到定義＝有練習（≥L2）的細項比例；看得到做法＝有練習的細項中，產出、檢核、具體數量三者的平均；成果不誇大＝練習段落 ÷（練習段落＋只寫目標的宣稱句）；不是範本＝相關敘述中非空泛目標句的比例。沒有相關敘述時顯示「—」。</p>
+    <p>Laya 對每一段、每個細項回答一個 noul 問題 P(是)。校準顯示此模型零樣本能辨識「有沒有 AI 相關活動」與否定句，但分不清是哪一個細項，也分不清「只寫目標」與「實際練習」，因此機率不計入分數。原本也試過用模型機率標示「需人工複核」，但在校準集上這些旗標沒有抓到任何規則與標籤不一致的格子，反而在 121 格中觸發 51 格，所以不採用。現在模型機率只列出，並註明是否與尺規方向一致（P ≥ 0.5），以及該細項在校準集上的區辨力（AUROC）。「需人工複核」只用於練習段落本身沒有提到 AI 的情況；沒有任何細項達到 L2 時，顯示「證據不足」。</p>
+    <p>此尺規是展示用設計，不是教育部官方量尺，也不等同另一份簡報的 0–5 課程培養程度評分。校準與驗證案例的標籤由 Claude 擬定，屬暫定標籤，未經教師或專家標註；規則以中文課綱為主，英文課綱與特殊寫法可能漏判。詳見 GitHub README。</p>
   </section>
 
   <footer>

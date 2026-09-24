@@ -1,0 +1,133 @@
+val-mech-design        rubric A25 B25 C17 D33 | legacy A71 B70 C72 D68 | meta ok | DIFF A-1 exp 4 got 2; B-2 exp 3 got 0; C-1 exp 4 got 2
+val-vague              rubric A13 B8 C8 D17 | legacy A61 B57 C62 D58 | meta ok 
+val-d-only             rubric A0 B8 C0 D75 | legacy A47 B46 C47 D51 | meta ok | DIFF B-2 exp 0 got 1
+val-noai-history       rubric A0 B0 C0 D0 | legacy A48 B48 C48 D67 | meta ok 
+val-tools-bullets      rubric A13 B0 C0 D0 | legacy A46 B33 C53 D32 | meta ok | DIFF A-1 exp 0 got 1
+val-negation           rubric A0 B25 C0 D0 | legacy A56 B38 C60 D37 | meta ok | DIFF B-2 exp 4 got 3
+val-reordered-dup      rubric A0 B17 C25 D0 | legacy A53 B52 C66 D55 | meta ok 
+val-long-tail          rubric A0 B0 C33 D0 | legacy A64 B58 C66 D58 | meta ok | DIFF B-2 exp 4 got 0
+val-teacher-demo       rubric A25 B17 C0 D0 | legacy A54 B39 C57 D48 | meta ok | DIFF A-2 exp 1 got 2; B-2 exp 1 got 2
+val-a-only             rubric A50 B0 C0 D0 | legacy A55 B43 C47 D46 | meta ok 
+val-goal-plus-grading  rubric A0 B17 C0 D0 | legacy A41 B34 C49 D43 | meta ok 
+val-english            rubric A0 B0 C0 D0 | legacy A59 B42 C58 D56 | meta ok | DIFF B-2 exp 4 got 0; D-2 exp 3 got 0
+{
+ "set": "validation",
+ "labelStatus": "暫定標籤：由 Claude 依官方 IV 定義擬定，非教師或專家人工標註，需人工複核。規則凍結後才撰寫。",
+ "policy": {
+  "agree": 0.5
+ },
+ "cases": 12,
+ "cells": 132,
+ "exactAgreement": 0.917,
+ "within1": 0.955,
+ "rubricAccuracyAtL2": 0.955,
+ "falseAttribution": [],
+ "missed": [
+  "val-mech-design:B-2-IV-1(exp L3 got L0)",
+  "val-long-tail:B-2-IV-1(exp L4 got L0)",
+  "val-english:B-2-IV-1(exp L4 got L0)",
+  "val-english:D-2-IV-1(exp L3 got L0)"
+ ],
+ "metamorphic": {
+  "reorder": true,
+  "duplicate": true,
+  "deletion": true
+ },
+ "model": [
+  {
+   "id": "A-1-IV-1",
+   "auroc": 0.818,
+   "pos": 1,
+   "neg": 11,
+   "meanPos": 0.907,
+   "meanNeg": 0.604
+  },
+  {
+   "id": "A-2-IV-1",
+   "auroc": 0.909,
+   "pos": 1,
+   "neg": 11,
+   "meanPos": 0.972,
+   "meanNeg": 0.715
+  },
+  {
+   "id": "B-1-IV-1",
+   "auroc": 0.95,
+   "pos": 2,
+   "neg": 10,
+   "meanPos": 0.975,
+   "meanNeg": 0.482
+  },
+  {
+   "id": "B-2-IV-1",
+   "auroc": 0.5,
+   "pos": 4,
+   "neg": 8,
+   "meanPos": 0.896,
+   "meanNeg": 0.747
+  },
+  {
+   "id": "B-3-IV-1",
+   "auroc": null,
+   "pos": 0,
+   "neg": 12,
+   "meanPos": null,
+   "meanNeg": 0.386
+  },
+  {
+   "id": "C-1-IV-1",
+   "auroc": 0.7,
+   "pos": 2,
+   "neg": 10,
+   "meanPos": 0.997,
+   "meanNeg": 0.891
+  },
+  {
+   "id": "C-2-IV-1",
+   "auroc": null,
+   "pos": 0,
+   "neg": 12,
+   "meanPos": null,
+   "meanNeg": 0.915
+  },
+  {
+   "id": "C-3-IV-1",
+   "auroc": 0.636,
+   "pos": 1,
+   "neg": 11,
+   "meanPos": 0.985,
+   "meanNeg": 0.87
+  },
+  {
+   "id": "D-1-IV-1",
+   "auroc": 0.727,
+   "pos": 1,
+   "neg": 11,
+   "meanPos": 0.943,
+   "meanNeg": 0.811
+  },
+  {
+   "id": "D-2-IV-1",
+   "auroc": 0.75,
+   "pos": 2,
+   "neg": 10,
+   "meanPos": 0.299,
+   "meanNeg": 0.217
+  },
+  {
+   "id": "D-3-IV-1",
+   "auroc": 0.4,
+   "pos": 2,
+   "neg": 10,
+   "meanPos": 0.359,
+   "meanNeg": 0.419
+  }
+ ],
+ "legacy": {
+  "detailAccuracyAt50": 0.402,
+  "detailAuroc": 0.616,
+  "falsePositivesAt50": 79,
+  "negatives": 116,
+  "positives": 16
+ }
+}

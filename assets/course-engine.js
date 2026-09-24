@@ -8,8 +8,18 @@ export const METRICS = [
   ['boilerplate', '不是範本', '相關敘述中非空泛目標句的比例'],
 ];
 
-// Model thresholds chosen on the calibration set only (calibration/results/calibration.json).
-export const MODEL_POLICY = {corroborate: 0.5, hint: 0.9};
+// Laya is reported next to the rubric, never inside it. On the calibration set, review flags driven by
+// the model (P < 0.5 on rubric evidence, or P ≥ 0.9 without it) caught 0 of 3 rubric/label disagreements
+// while firing on 51 of 121 cells, so the model only gets a descriptive agree/disagree note.
+export const MODEL_POLICY = {agree: 0.5};
+// Course-level AUROC of max P(yes) against provisional labels (≥L2), calibration set only.
+// Very few positives per competency: treat as a rough reliability hint, not a validated figure.
+export const MODEL_CALIBRATION = {
+  'A-1-IV-1': {auroc: 0.875, pos: 4, neg: 7}, 'A-2-IV-1': {auroc: 0.611, pos: 2, neg: 9},
+  'B-1-IV-1': {auroc: 0.911, pos: 4, neg: 7}, 'B-2-IV-1': {auroc: 0.733, pos: 6, neg: 5}, 'B-3-IV-1': {auroc: 0.4, pos: 1, neg: 10},
+  'C-1-IV-1': {auroc: 0.604, pos: 3, neg: 8}, 'C-2-IV-1': {auroc: null, pos: 0, neg: 11}, 'C-3-IV-1': {auroc: 0.75, pos: 3, neg: 8},
+  'D-1-IV-1': {auroc: 0.778, pos: 2, neg: 9}, 'D-2-IV-1': {auroc: 0.458, pos: 3, neg: 8}, 'D-3-IV-1': {auroc: null, pos: 0, neg: 11},
+};
 
 // Model-facing questions: one noul per competency, asked of every teaching unit.
 const CRITERIA = {true: 'yes, the text describes students doing exactly this', false: 'no, the text is about something else, only states a goal, or says it is not done'};
@@ -128,11 +138,10 @@ export function scoreAbility(ab, analysis, modelP, policy = MODEL_POLICY) {
     const pEvidence = evidence.length && modelP ? Math.max(...evidence.map(pAt)) : null;
     let pAny = null, pAnyUnit = null;
     if (modelP) modelP.forEach((p, i) => { if (pAny === null || p[id] > pAny) { pAny = p[id]; pAnyUnit = i; } });
-    let review = null;
-    if (m.practice && m.units.filter(u => u.practice).every(u => u.aiFromCourse)) review = '練習段落本身未提到 AI，請確認此活動與 AI 相關';
-    else if (m.level >= 2 && pEvidence !== null && pEvidence < policy.corroborate) review = '尺規找到學生練習，但模型未佐證（機率偏低）';
-    else if (m.level <= 1 && pAny !== null && pAny >= policy.hint) review = '模型判為相關，但尺規未見學生練習證據';
-    return {id, ...m, pEvidence, pAny, pAnyUnit, review, corroborated: m.level >= 2 && pEvidence !== null && pEvidence >= policy.corroborate};
+    const review = m.practice && m.units.filter(u => u.practice).every(u => u.aiFromCourse) ? '練習段落本身未提到 AI，請確認此活動與 AI 相關' : null;
+    // Descriptive only: does the model's reading point the same way as the rubric?
+    const modelAgrees = !modelP ? null : m.level >= 2 ? pEvidence >= policy.agree : pAny < policy.agree;
+    return {id, ...m, pEvidence, pAny, pAnyUnit, review, modelAgrees, modelCalibration: MODEL_CALIBRATION[id]};
   });
   const n = comps.length, levels = comps.map(c => c.level);
   const practiced = comps.filter(c => c.practice);

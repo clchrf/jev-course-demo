@@ -1,0 +1,132 @@
+cal-builtin-good       rubric A100 B67 C67 D50 | legacy A60 B57 C60 D42 | meta ok 
+cal-builtin-bad        rubric A25 B25 C17 D17 | legacy A48 B40 C56 D39 | meta ok 
+cal-partial-writing    rubric A100 B67 C0 D0 | legacy A54 B37 C66 D53 | meta ok | DIFF A-2 exp 0 got 4; B-3 exp 0 got 1
+cal-noai-accounting    rubric A0 B0 C0 D0 | legacy A48 B48 C48 D52 | meta ok 
+cal-tools-only         rubric A0 B0 C0 D0 | legacy A48 B26 C48 D31 | meta ok 
+cal-negation           rubric A0 B33 C0 D0 | legacy A70 B59 C75 D58 | meta ok | DIFF C-3 exp 3 got 0
+cal-duplicate          rubric A100 B67 C0 D0 | legacy A54 B37 C66 D53 | meta ok | DIFF A-2 exp 0 got 4; B-3 exp 0 got 1
+cal-longtail           rubric A0 B33 C67 D0 | legacy A70 B50 C75 D72 | meta ok | DIFF B-1 exp 0 got 1
+cal-nursing            rubric A0 B33 C33 D50 | legacy A52 B46 C62 D50 | meta ok | DIFF C-1 exp 2 got 4
+cal-a-only             rubric A88 B0 C0 D0 | legacy A56 B38 C61 D50 | meta ok 
+cal-grading-table      rubric A0 B58 C0 D33 | legacy A61 B54 C65 D48 | meta ok 
+{
+ "set": "calibration",
+ "labelStatus": "暫定標籤：由 Claude 依官方 IV 定義擬定，非教師或專家人工標註，需人工複核。",
+ "policy": {
+  "agree": 0.5
+ },
+ "cases": 11,
+ "cells": 121,
+ "exactAgreement": 0.942,
+ "within1": 0.967,
+ "rubricAccuracyAtL2": 0.975,
+ "falseAttribution": [
+  "cal-partial-writing:A-2-IV-1(got L4)",
+  "cal-duplicate:A-2-IV-1(got L4)"
+ ],
+ "missed": [
+  "cal-negation:C-3-IV-1(exp L3 got L0)"
+ ],
+ "metamorphic": {
+  "reorder": true,
+  "duplicate": true,
+  "deletion": true
+ },
+ "model": [
+  {
+   "id": "A-1-IV-1",
+   "auroc": 0.875,
+   "pos": 4,
+   "neg": 7,
+   "meanPos": 0.987,
+   "meanNeg": 0.703
+  },
+  {
+   "id": "A-2-IV-1",
+   "auroc": 0.611,
+   "pos": 2,
+   "neg": 9,
+   "meanPos": 0.989,
+   "meanNeg": 0.813
+  },
+  {
+   "id": "B-1-IV-1",
+   "auroc": 0.911,
+   "pos": 4,
+   "neg": 7,
+   "meanPos": 0.986,
+   "meanNeg": 0.752
+  },
+  {
+   "id": "B-2-IV-1",
+   "auroc": 0.733,
+   "pos": 6,
+   "neg": 5,
+   "meanPos": 0.886,
+   "meanNeg": 0.787
+  },
+  {
+   "id": "B-3-IV-1",
+   "auroc": 0.4,
+   "pos": 1,
+   "neg": 10,
+   "meanPos": 0.774,
+   "meanNeg": 0.656
+  },
+  {
+   "id": "C-1-IV-1",
+   "auroc": 0.604,
+   "pos": 3,
+   "neg": 8,
+   "meanPos": 0.999,
+   "meanNeg": 0.882
+  },
+  {
+   "id": "C-2-IV-1",
+   "auroc": null,
+   "pos": 0,
+   "neg": 11,
+   "meanPos": null,
+   "meanNeg": 0.913
+  },
+  {
+   "id": "C-3-IV-1",
+   "auroc": 0.75,
+   "pos": 3,
+   "neg": 8,
+   "meanPos": 0.953,
+   "meanNeg": 0.837
+  },
+  {
+   "id": "D-1-IV-1",
+   "auroc": 0.778,
+   "pos": 2,
+   "neg": 9,
+   "meanPos": 0.98,
+   "meanNeg": 0.818
+  },
+  {
+   "id": "D-2-IV-1",
+   "auroc": 0.458,
+   "pos": 3,
+   "neg": 8,
+   "meanPos": 0.234,
+   "meanNeg": 0.233
+  },
+  {
+   "id": "D-3-IV-1",
+   "auroc": null,
+   "pos": 0,
+   "neg": 11,
+   "meanPos": null,
+   "meanNeg": 0.525
+  }
+ ],
+ "legacy": {
+  "detailAccuracyAt50": 0.405,
+  "detailAuroc": 0.643,
+  "falsePositivesAt50": 68,
+  "negatives": 93,
+  "positives": 28
+ }
+}
