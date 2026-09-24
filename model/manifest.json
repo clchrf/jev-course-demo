@@ -1,0 +1,22 @@
+{
+ "model": "convaiinnovations/laya (multilingual), ONNX int4 embeddings + int8 matmul",
+ "files": {
+  "encoder.onnx": {
+   "size": 249852171,
+   "parts": [
+    "encoder.onnx.part0",
+    "encoder.onnx.part1",
+    "encoder.onnx.part2"
+   ]
+  },
+  "head.onnx": {
+   "size": 21201085
+  },
+  "rl_agent_config.json": {
+   "size": 472
+  },
+  "tokenizer.json": {
+   "size": 34363188
+  }
+ }
+}

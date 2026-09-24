@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jev 課程計畫檢視</title>
+<meta name="description" content="以開源版 Jev（Laya）在瀏覽器即時判讀大專院校 AI 課程計畫是否符合教育部未來人才 AI 能力圖像。">
+<!-- GitHub Pages 無法設定 COOP/COEP，用 service worker 補上，才能啟用多執行緒 WASM -->
+<script src="coi-serviceworker.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" crossorigin="anonymous" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap">
+<script type="importmap">
+{ "imports": { "onnxruntime-web": "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/ort.bundle.min.mjs" } }
+</script>
+<style>
+:root{
+  --page:#F4F5F7; --card:#F3F6FA; --field:#E7EDF5; --white:#FFFFFF;
+  --ink:#1B2230; --text:#3B4453; --muted:#6B7483; --faint:#98A0AD; --line:#E2E7EE;
+  --blue:#2F7BF6; --green:#2FC486; --green-ink:#17905F; --amber:#E0A21B; --amber-ink:#A87400;
+  --red:#EE5D6C; --red-ink:#D23C4E; --track:#E6EAF0;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;padding-inline:16px;padding-block:0 56px}
+.wrap{max-width:1200px;margin:0 auto}
+h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance}
+p{margin:0}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.tab{font-variant-numeric:tabular-nums}
+
+/* header */
+header{padding-block:40px 22px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:18px}
+h1{font-size:clamp(30px,4.4vw,44px);font-weight:900;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:15.5px;margin-top:6px;max-width:60ch}
+.facts{display:flex;gap:26px;flex-wrap:wrap}
+.fact b{display:block;font-family:var(--mono);font-size:20px;font-weight:600}
+.fact span{font-size:12px;color:var(--muted)}
+
+/* model bar */
+.modelbar{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:16px 20px;display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center}
+.modelbar .st{display:flex;align-items:center;gap:10px;font-weight:700;min-width:0}
+.led{width:10px;height:10px;border-radius:50%;background:var(--faint);flex:none}
+.led.load{background:var(--amber);animation:blink 1s infinite}
+.led.ok{background:var(--green)}
+.led.err{background:var(--red)}
+@keyframes blink{50%{opacity:.35}}
+.modelbar .info{color:var(--muted);font-size:13px;flex:1;min-width:220px}
+.prog{flex-basis:100%;height:6px;background:var(--track);border-radius:3px;overflow:hidden}
+.prog i{display:block;height:100%;width:0;background:var(--blue);transition:width .2s}
+.btn{border:1px solid var(--line);background:var(--white);color:var(--ink);border-radius:10px;padding:7px 14px;font-size:13.5px}
+.btn:hover{border-color:var(--blue);color:var(--blue)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{color:#fff;filter:brightness(1.07)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* layout */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;margin-top:22px;align-items:start}
+.toolbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.toolbar h2{font-size:19px}
+.toolbar .btns{display:flex;gap:8px;flex-wrap:wrap}
+.cards{display:flex;flex-direction:column;gap:20px}
+
+/* ability card — 對照簡報樣式 */
+.card{background:var(--card);border-radius:26px;padding:24px 26px;display:flex;flex-direction:column;gap:12px}
+.card.off .body{opacity:.45;pointer-events:none}
+.head{display:flex;align-items:center;gap:12px}
+.badge{flex:none;width:24px;height:24px;border-radius:50%;background:var(--green);color:#0E3B29;display:grid;place-items:center;font-size:12px;font-weight:700}
+.head h3{font-size:21px;font-weight:700;flex:1}
+.switch{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;color:var(--ink)}
+.switch input{appearance:none;margin:0;width:46px;height:26px;border-radius:13px;background:#C9D1DC;position:relative;cursor:pointer;transition:background .2s}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.switch input:checked{background:var(--blue)}
+.switch input:checked::after{transform:translateX(20px)}
+.body{display:flex;flex-direction:column;gap:10px}
+.desc{color:var(--text);font-size:15px;max-width:62ch}
+details.comps{font-size:13px;color:var(--muted)}
+details.comps summary{cursor:pointer;width:max-content;max-width:100%}
+.comp{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin-top:8px}
+.comp code{font-family:var(--mono);font-size:12px;color:var(--blue)}
+.comp b{font-weight:500;color:var(--text)}
+.comp p{grid-column:2;font-size:12.5px}
+.q{font-size:13.5px;font-weight:700;margin-top:4px}
+textarea{width:100%;min-height:150px;resize:vertical;font:inherit;font-size:15px;line-height:1.75;color:var(--ink);background:var(--field);border:1.5px solid transparent;border-radius:14px;padding:14px 16px}
+textarea:focus{outline:none;border-color:var(--blue);background:#EEF3F9}
+.hint{display:flex;justify-content:space-between;gap:14px;font-size:12.5px;color:var(--muted)}
+.hint .count{flex:none;font-variant-numeric:tabular-nums}
+.warn{font-size:12.5px;color:var(--muted)}
+.samples{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid #D5DCE6;background:transparent;color:var(--muted);border-radius:999px;padding:3px 12px;font-size:12.5px}
+.chip:hover{color:var(--blue);border-color:var(--blue)}
+
+/* result box */
+.result{background:var(--white);border:1px solid var(--line);border-radius:18px;padding:18px 22px;display:flex;flex-direction:column;gap:14px;margin-top:4px}
+.rhead{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.rhead .lbl{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
+.spin{width:12px;height:12px;border:2px solid var(--line);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;display:none}
+.busy .spin{display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+.total{display:flex;align-items:baseline;gap:6px}
+.total b{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.total span{font-size:13px;font-weight:700}
+.row{display:grid;grid-template-columns:170px minmax(60px,1fr) 44px 120px;align-items:center;gap:16px}
+.row .nm b{display:block;font-size:14px;font-weight:700}
+.row .nm small{display:block;font-size:11.5px;color:var(--muted);line-height:1.4}
+.bar{height:6px;background:var(--track);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:3px;background:var(--green);transition:width .6s cubic-bezier(.2,.8,.2,1),background .3s}
+.row .sc{text-align:right;font-weight:700;font-size:15px;font-variant-numeric:tabular-nums}
+.row .tg{text-align:right;font-size:13px}
+.g{color:var(--green-ink)} .a{color:var(--amber-ink)} .r{color:var(--red-ink)}
+.result.idle .row,.result.idle .total{opacity:.35}
+.result .note{font-size:12px;color:var(--faint)}
+
+/* log panel */
+aside{position:sticky;top:16px;background:var(--white);border:1px solid var(--line);border-radius:22px;padding:20px;display:flex;flex-direction:column;gap:14px;max-height:calc(100vh - 32px);overflow:auto}
+aside h2{font-size:17px}
+aside .lead{font-size:12.5px;color:var(--muted)}
+.meters{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.meters div{background:var(--card);border-radius:12px;padding:8px 10px}
+.meters b{display:block;font-family:var(--mono);font-size:15px;font-weight:600}
+.meters span{font-size:11px;color:var(--muted)}
+.abtabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.abtabs button{border:1px solid var(--line);background:var(--white);border-radius:10px;padding:5px 0;display:flex;flex-direction:column;align-items:center;line-height:1.3}
+.abtabs button.on{border-color:var(--blue);background:#EEF4FF}
+.abtabs .l{font-size:11px;color:var(--muted)}
+.abtabs .n{font-family:var(--mono);font-weight:600;font-size:16px}
+.req{font-family:var(--mono);font-size:12px;line-height:1.6;background:#F6F8FB;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px;overflow-wrap:anywhere}
+.req .k{color:var(--blue)}
+.req .s{color:#8A5A00}
+.qs{display:flex;flex-direction:column;gap:8px}
+.qi{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+.qi:last-child{border-bottom:none}
+.qi .en{font-family:var(--mono);font-size:11.5px;color:var(--text)}
+.qi .zh{font-size:12px;color:var(--muted);grid-column:1}
+.qi .p{grid-row:1/3;grid-column:2;align-self:center;font-family:var(--mono);font-weight:600;font-size:15px}
+.qi .use{grid-column:1/-1;font-size:11px;color:var(--faint)}
+aside .fine{font-size:11.5px;color:var(--faint);border-top:1px solid var(--line);padding-top:10px}
+
+/* method */
+.method{margin-top:44px;display:flex;flex-direction:column;gap:14px}
+.method h2{font-size:21px}
+.tw{overflow-x:auto;background:var(--white);border:1px solid var(--line);border-radius:18px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:12px 16px;border-bottom:1px solid var(--line)}
+th{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:.06em}
+tr:last-child td{border-bottom:none}
+td code{font-family:var(--mono);font-size:12.5px;color:var(--blue)}
+.pill{display:inline-block;font-size:12px;padding:1px 9px;border-radius:999px;background:var(--card);color:var(--muted);white-space:nowrap}
+.method p{color:var(--text);font-size:14px;max-width:84ch}
+footer{margin-top:40px;border-top:1px solid var(--line);padding-top:18px;font-size:12.5px;color:var(--faint);display:flex;flex-direction:column;gap:6px}
+footer a{color:var(--muted)}
+
+@media (max-width:1000px){
+  .main{grid-template-columns:minmax(0,1fr)}
+  aside{position:static;max-height:none}
+}
+@media (max-width:640px){
+  .card{padding:20px 18px;border-radius:22px}
+  .head h3{font-size:18px}
+  .row{grid-template-columns:1fr 44px;row-gap:4px}
+  .row .nm{grid-column:1/-1}
+  .row .tg{grid-column:1/-1;text-align:left;margin-top:-2px}
+  .switch span{display:none}
+}
+@media (prefers-reduced-motion:reduce){ .bar i{transition:none} .led.load,.spin{animation:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Jev 課程計畫檢視</h1>
+      <p class="sub">用開源版 Jev（Laya）在你的瀏覽器裡即時判讀：教師寫的 AI 課程規劃，是否符合教育部《未來人才 AI 能力圖像》大專院校階段的核心能力。改任何一個字，模型都會重新判斷。</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><b>3.2 億</b><span>參數・mmBERT 多語編碼器</span></div>
+      <div class="fact"><b>0 字</b><span>生成文字・只回傳機率</span></div>
+      <div class="fact"><b>本機</b><span>資料不離開瀏覽器</span></div>
+    </div>
+  </header>
+
+  <section class="modelbar" aria-live="polite">
+    <div class="st"><span class="led" id="led"></span><span id="mstate">尚未載入模型</span></div>
+    <p class="info" id="minfo">首次使用需下載約 300 MB 的模型檔，之後會存在瀏覽器快取。建議使用電腦版 Chrome 或 Edge。</p>
+    <button class="btn primary" id="loadBtn" type="button">載入 Laya 模型</button>
+    <div class="prog" id="prog" hidden><i id="progBar"></i></div>
+  </section>
+
+  <div class="main">
+    <section aria-labelledby="formTitle">
+      <div class="toolbar">
+        <h2 id="formTitle">AI 課程計畫申請表・顧客關係管理與 AI 應用（餐旅系三年級）</h2>
+        <div class="btns">
+          <button class="btn" id="allGood" type="button">全部載入好例子</button>
+          <button class="btn" id="allBad" type="button">全部載入反例</button>
+        </div>
+      </div>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <aside aria-label="Laya 呼叫紀錄">
+      <div>
+        <h2>Laya 呼叫紀錄</h2>
+        <p class="lead">每次判斷送進模型的內容、問題與回傳的 P(是)</p>
+      </div>
+      <div class="meters">
+        <div><b class="tab" id="mBackend">–</b><span>執行後端</span></div>
+        <div><b class="tab" id="mLast">–</b><span>上次判斷</span></div>
+        <div><b class="tab" id="mCalls">0</b><span>已問題數</span></div>
+      </div>
+      <div class="abtabs" id="abtabs"></div>
+      <div id="logBody"><p class="lead">模型載入後，這裡會顯示最近一次判斷的完整內容。</p></div>
+      <p class="fine">示範資料，不代表實際案例；分數僅供參考，未經嚴謹驗證。</p>
+    </aside>
+  </div>
+
+  <section class="method" aria-labelledby="mTitle">
+    <h2 id="mTitle">怎麼問 Laya</h2>
+    <p>Jev／Laya 不生成文字，只回答是非題的機率。我們把每項能力拆成模型答得準的「事實題」，一段文字一次問 6 題，只需一次編碼器運算。</p>
+    <div class="tw">
+      <table>
+        <thead><tr><th>畫面名稱</th><th>評分項目</th><th>問 Laya 的題目</th><th>換算</th><th>驗證 AUC</th></tr></thead>
+        <tbody>
+          <tr><td>對到定義</td><td><code>alignment</code></td><td>該能力的 3 題核心行為題（例如 D：學生是否訪談或與真人互動？）</td><td>三題取最高 × 100</td><td>0.78</td></tr>
+          <tr><td>看得到做法</td><td><code>concreteness</code></td><td>是否寫出週次或評分方式？是否提到具體數字、資料或工具？</td><td>兩題平均 × 100</td><td>0.98</td></tr>
+          <tr><td>成果不誇大</td><td><code>supported</code></td><td>同上 3 題核心行為題，看涵蓋了幾項</td><td>三題平均 × 100</td><td>0.68</td></tr>
+          <tr><td>不是範本</td><td><code>boilerplate</code></td><td>是否只是培養能力的空泛口號？</td><td>(1 − P) × 100</td><td>1.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>驗證方式：20 段課程文字（12 段未參與調整題目），計算好文案分數高於反例的比例（AUC，0.5 為隨機）。四項平均後的總分 AUC 為 0.93。題目以英文提問、文字維持中文，這是測試中對 Laya 多語模型效果最好的組合；模型以 4／8 位元權重量化，與原始 PyTorch 模型的鑑別度一致。</p>
+  </section>
+
+  <footer>
+    <p>模型：<a href="https://github.com/NandhaKishorM/laya">Laya</a>（Convai Innovations，Apache-2.0）・laya-multilingual 權重來自 <a href="https://huggingface.co/convaiinnovations/laya">Hugging Face</a>，經 ONNX 轉換與量化。Jev 為 TypeSafe AI 之閉源產品，本頁未使用其服務。</p>
+    <p>能力定義：教育部資訊及科技教育司（2026）。<a href="https://depart.moe.edu.tw/ed2700/News_Content.aspx?n=A1E30194B1C3ACDF&amp;s=4C49BBB8F747DE99">《未來人才AI能力圖像》</a>大專院校階段（IV）。</p>
+  </footer>
+</div>
+
+<script type="module" src="assets/app.js"></script>
+</body>
+</html>
